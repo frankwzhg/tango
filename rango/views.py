@@ -1,0 +1,17 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+# Create your views here.
+
+def index(request):
+    #Contruct a dictionary to pass to template engine as its context.
+    #Note the key boldmessage is the same as {{boldmessage}} in the template
+    context_dict = {'blodmessage': 'I am bold font from the context'}
+
+    # Return a rendered response to send to client.
+    # We make use of the shortcut function to make our live easier.
+    # Not the first parameter is the template we wish to use
+    return render(request, 'rango/index.html', context_dict)
+
+
+def about(request):
+    return HttpResponse("Rango says here is the about page<a href='/rango/'>Index</a>")

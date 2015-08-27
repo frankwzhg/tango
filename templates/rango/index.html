@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<!--
+{% load staticfiles %}
+-->
+{% load static %}
+<html>
+    <head>
+        <title>Rango</title>
+        <link rel="stylesheet" href="{% static "css/base.css" %}" />
+        <script src="{% static "js/jquery.js" %}"></script>
+    </head>
+    <body>
+        <h1>Rango says...</h1>
+        hello world! <strong>{{ blodmessage }}</strong><br />
+        <a href="/rango/about/">About</a><br />
+        <img src="{% static "images/pic.JPG" %}" alt="Picture of Rango" />
+    </body>
+</html>
