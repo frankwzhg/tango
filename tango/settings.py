@@ -13,6 +13,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
 STATIC_PATH = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -60,8 +61,12 @@ WSGI_APPLICATION = 'tango.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'tango',
+        'USER': 'root',
+        'PASSWORD': 'Dadi4747',
+        'HOST': 'frankub.frankdata.com.cn',
+        'PORT': 3306,
     }
 }
 
@@ -88,3 +93,8 @@ STATICFILES_DIRS = (STATIC_PATH, )
 # add templates folder
 
 TEMPLATE_DIRS = (TEMPLATE_PATH,)
+
+
+#add media URL
+
+MEDIA_URL = '/media/'

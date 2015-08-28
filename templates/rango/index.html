@@ -11,8 +11,19 @@
     </head>
     <body>
         <h1>Rango says...</h1>
-        hello world! <strong>{{ blodmessage }}</strong><br />
-        <a href="/rango/about/">About</a><br />
-        <img src="{% static "images/pic.JPG" %}" alt="Picture of Rango" />
+        {% if categories %}
+            <ul>
+                {% for category in categories %}
+                    <li><a href="/rango/category/{{ category.slug }}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+            <h1>these page is top five read</h1>
+                {% for page in top_five %}
+                    <li>{{ page }}</li>
+                {% endfor %}
+        {% else %}
+            <strong>there are not category present</strong>
+        {% endif %}
+        <a href="/rango/about/">About</a>
     </body>
 </html>
