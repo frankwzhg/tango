@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Django default" uuid="8ea30f7a-2a21-4c08-b476-1ade853e1695">
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <schema-pattern>tango.*</schema-pattern>
+      <default-schemas>tango.*</default-schemas>
+    </data-source>
+  </component>
+</project>
