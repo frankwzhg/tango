@@ -98,3 +98,10 @@ TEMPLATE_DIRS = (TEMPLATE_PATH,)
 #add media URL
 
 MEDIA_URL = '/media/'
+
+# add password hashers
+
+PASSWORD_HASHERS = (
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+)
