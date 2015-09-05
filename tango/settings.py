@@ -38,7 +38,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    #'rango.templatertags.rango_extras',
     'rango',
+    'registration',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -106,4 +110,27 @@ PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 )
 
-LOGIN_URL = '/rango/login/'
+LOGIN_URL = '/accounts/login/'
+
+# configure cookie session
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 1209600
+
+# blowing is some configration for user registration
+REGISTRATION_OPEN = True  # if True, user can register
+ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation windows; you may, of course, use a different value
+REGISTRATION_AUTO_LOGIN = True # If True,  the user will be automatically logged in
+LOGIN_REDIRECT_URL = '/rango/' #The page you want users to arrive at after they successful log in
+LOGIN_URL = '/accounts/login/' #he page users are directed to if they are not logged in,
+                                                                # and are trying to access pages requiring authentication
+
+SITE_ID = 1
+
+# mail server configure
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.live.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'frankwzhg@hotmail.com'
+EMAIL_HOST_PASSWORD = 'Frank009216'
+DEFAULT_FROM_EMAIL = 'frankwzhg@hotmail.com'
+SERVER_EMAIL = 'frankwzhg@hotmail.com'

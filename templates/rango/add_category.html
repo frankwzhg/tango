@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-{% block title_block %}add a new category{% endblock %}
-{% block body_block %}
+{% block title %}add a new category{% endblock %}
+{% block content %}
     <h1>Add a new category</h1>
         <form id="category_form", method="POST", action="/rango/add_category/">
             {% csrf_token %}

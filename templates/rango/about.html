@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-{% block title_block %}this is a about page{% endblock %}
-{% block body_block %}
-    <h1>this is a about page</h1>
+{% block title %}this is a about page{% endblock %}
+{% block content %}
+    <div class="page-header">
+        <h1>this is a about page</h1>
         <p>this is template for about page, introduction this web</p>
-        <img src = '/static/images/about.JPG' />
+        <img width='1000' height="900" src ="{% static "images/about.JPG" %}" alt="Picture of Rango" />
+    </div>
+
 {% endblock %}
 
