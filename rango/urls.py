@@ -11,8 +11,8 @@ urlpatterns = patterns('',
             url(r'^category/(?P<category_name_slug>[\w\-]+)/$', views.category, name='category'),
             url(r'^add_category/$', views.add_category, name='add_category'),
             url(r'^category/(?P<category_name_slug>[\w\-]+)/add_page/$', views.add_page, name='add_page'),
-            # url(r'^register/$', MyregistrationView.as_view(), name='registion_register'),
-            # url(r'^accounts/login$', views.user_login, name='login'),
+            url(r'^goto/$', views.track_url, name='goto'),
+            url(r'^user_profile_update/$', views.user_profile_update, name='user_profile_update'),
             url(r'^restricted/$', views.restricted, name='restricted'),
             # url(r'^logout/$', views.user_logout, name='logout')
             )

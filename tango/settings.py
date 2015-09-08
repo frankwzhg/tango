@@ -10,6 +10,12 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import socket
+ip_address = socket.gethostbyname(socket.gethostname())
+if ip_address[8:11] != '199':
+    host = 'frankub.frankdata.com.cn'
+else:
+    host = 'frankr.jios.org'
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
 STATIC_PATH = os.path.join(BASE_DIR, 'static')
@@ -41,7 +47,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     #'rango.templatertags.rango_extras',
     'rango',
-    'registration',
+    # 'registration',
 
 )
 
@@ -69,7 +75,7 @@ DATABASES = {
         'NAME': 'tango',
         'USER': 'root',
         'PASSWORD': 'Dadi4747',
-        'HOST': 'frankub.frankdata.com.cn',
+        'HOST': host,
         'PORT': 3306,
     }
 }
@@ -79,7 +85,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
