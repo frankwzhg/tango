@@ -14,5 +14,5 @@ urlpatterns = patterns('',
             url(r'^goto/$', views.track_url, name='goto'),
             url(r'^user_profile_update/$', views.user_profile_update, name='user_profile_update'),
             url(r'^restricted/$', views.restricted, name='restricted'),
-            # url(r'^logout/$', views.user_logout, name='logout')
+            url(r'^user_profile_add/$', views.user_profile_add, name='user_profile_add'),
             )

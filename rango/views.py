@@ -171,6 +171,7 @@ def add_page(request, category_name_slug):
 
     return render(request, 'rango/add_page.html', context_dic)
 
+
 def user_profile_update(request):
     user_id = request.user.id
     if request.method == 'GET':
@@ -181,15 +182,48 @@ def user_profile_update(request):
             context_dic = {'user_id':user_info.user_id, 'user_picture':user_info.picture, 'birth_day':user_info.birthday, 'website':user_info.website}
             return render(request, 'rango/user_profile_update.html', context_dic)
         except:
-            return render(request, 'rango/user_profile_form.html')
+            return HttpResponseRedirect('/rango/user_profile_add')
     else:
-        form = PageForm(request.POST)
-        print form
-        UserProfile.objects.filter(user_id=user_id).update(website=form.website)
+        user_info = UserProfile.objects.get(user_id=user_id)
+        form = UserProfileForm(request.POST, instance=user_info)
+        print "test1"
+        if form.is_valid():
+            print "test"
+            form.save()
+        # form_count = form.save(commit=False)
+        # if 'picture' in request.FILES:
+        #     print "test"
+        #     form_count.picture = request.FILES['picture']
+        # form_count.save()
         return redirect('/rango/')
 
+def user_profile_add(request):
+    user_id = request.user.id
+    context_dict ={'user_id': user_id,}
+    if request.method == "POST":
+        form = UserProfileForm(request.POST)
 
-    # return render(request, 'rango/user_profile.html', context_dic)
+        if form.is_valid():
+            form_count = form.save(commit=False)
+            form_count.user_id = user_id
+            if 'picture' in request.FILES:
+                form_count.picture = request.FILES['picture']
+            form_count.save()
+    # else:
+    #     print "fault"
+        # profiles = form.save(commit=False)
+        # profiles.user_id = user_id
+        # profiles.picture = request.FILES['picture']
+        # profiles.website = request.POST['website']
+        # profiles.birthday = request.POST['birthday']
+        # profiles.save()
+        # context_dict['user_id'] = user_id
+        context_dict['UserProfileForm'] = form
+        return render(request, 'rango/user_profile_add.html', context_dict)
+    else:
+
+
+        return render(request, 'rango/user_profile_add.html', context_dict)
 
 # def user_profile_add(request):
 

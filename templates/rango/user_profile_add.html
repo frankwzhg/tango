@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+    <form role="form" method="POST" action=".">
+        {% csrf_token %}
+{#        {{ UserProfileForm.as_p }}#}
+        <h2 class="form-signin-heading">modify your profile</h2>
+        <div class="form-group">
+            <p><label for="picture">url</label>
+            <input class="form-control" id="website" name="website" type="url" value="{{ website }}" /></p>
+        </div>
+        <div class="form-group">
+            <p><label for="picture">your picture</label>
+            <input class="form-control" id="picture" name="picture" type="file"  /></p>
+        </div>
+        <div class="form-group">
+            <p><label for="birthday">Birthday</label>
+            <input class="form-control" id="birthday" name="birthday" type="date" value="{{ birth_day }}" /></p>
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+{% endblock %}
