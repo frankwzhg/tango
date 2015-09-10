@@ -3,10 +3,9 @@
 {% block content %}
     <form role="form" method="POST" action=".">
         {% csrf_token %}
-{#        {{ UserProfileForm.as_p }}#}
         <h2 class="form-signin-heading">modify your profile</h2>
         <div class="form-group">
-            <p><label for="picture">url</label>
+            <p><label for="website">url</label>
             <input class="form-control" id="website" name="website" type="url" value="{{ website }}" /></p>
         </div>
         <div class="form-group">

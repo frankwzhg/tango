@@ -7,5 +7,11 @@
       <schema-pattern>tango.*</schema-pattern>
       <default-schemas>tango.*</default-schemas>
     </data-source>
+    <data-source name="django-internet" uuid="e2f60d2f-6e2b-459d-8af8-69be6583d354">
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <schema-pattern>tango.*</schema-pattern>
+      <default-schemas>tango.*</default-schemas>
+    </data-source>
   </component>
 </project>

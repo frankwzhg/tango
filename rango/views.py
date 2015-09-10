@@ -13,6 +13,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from datetime import datetime
 from django.shortcuts import redirect
+from django.contrib import messages
+
 # Create your views here.
 
 def index(request):
@@ -184,31 +186,42 @@ def user_profile_update(request):
         except:
             return HttpResponseRedirect('/rango/user_profile_add')
     else:
-        user_info = UserProfile.objects.get(user_id=user_id)
-        form = UserProfileForm(request.POST, instance=user_info)
-        print "test1"
-        if form.is_valid():
-            print "test"
-            form.save()
+        profile_form = UserProfileForm(request.POST)
+        if profile_form.is_valid():
+            user_profile = UserProfile.objects.get(user_id=user_id)
+            profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+            profile_form.save()
+            return redirect('/rango/')
+        else:
+            user_profile = UserProfile.objects.get(user_id=user_id)
+            profile_form = UserProfileForm(instance=user_profile)
+            return render_to_response('rango/user_profile_update.html', {'form':profile_form}, context_instance=RequestContext(request))
+        # user_info = UserProfile.objects.get(user_id=user_id)
+        # form = UserProfileForm(request.POST, instance=user_info)
+        # print "test1"
+        # if form.is_valid():
+        #     print "test"
+        #     form.save()
         # form_count = form.save(commit=False)
         # if 'picture' in request.FILES:
         #     print "test"
         #     form_count.picture = request.FILES['picture']
         # form_count.save()
-        return redirect('/rango/')
+        # return redirect('/rango/')
 
 def user_profile_add(request):
     user_id = request.user.id
     context_dict ={'user_id': user_id,}
     if request.method == "POST":
         form = UserProfileForm(request.POST)
-
         if form.is_valid():
             form_count = form.save(commit=False)
             form_count.user_id = user_id
             if 'picture' in request.FILES:
                 form_count.picture = request.FILES['picture']
             form_count.save()
+        else:
+            print messages.error(request, "error")
     # else:
     #     print "fault"
         # profiles = form.save(commit=False)
