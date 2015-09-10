@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block content %}
-    <form role="form" method="POST" action=".">
+    <form enctype="multipart/form-data" role="form" method="POST" action=".">
         {% csrf_token %}
         <h2 class="form-signin-heading">modify your profile</h2>
         <div class="form-group">

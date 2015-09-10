@@ -54,8 +54,6 @@
       <exported-key name="auth_user_groups_user_id_24702650_fk_auth_user_id" table="auth_user_groups" schema="" catalog="tango" columns="user_id"/>
       <exported-key name="auth_user_user_permissions_user_id_7cd7acb6_fk_auth_user_id" table="auth_user_user_permissions" schema="" catalog="tango" columns="user_id"/>
       <exported-key name="django_admin_log_user_id_1c5f563_fk_auth_user_id" table="django_admin_log" schema="" catalog="tango" columns="user_id"/>
-      <exported-key name="user_id_refs_id_c8dfb33e" table="rango_userprofile" schema="" catalog="tango" columns="user_id"/>
-      <exported-key name="registration_registrationprofil_user_id_3f7685bb_fk_auth_user_id" table="registration_registrationprofile" schema="" catalog="tango" columns="user_id"/>
       <index name="username" unique="true" columns="username"/>
     </table>
     <table name="auth_user_groups" schema="" catalog="tango" type="TABLE">
@@ -151,15 +149,9 @@
       <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="website" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
       <column name="picture" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="birthday" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="user_id_refs_id_c8dfb33e" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="tango" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
-    </table>
-    <table name="registration_registrationprofile" schema="" catalog="tango" type="TABLE">
-      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="activation_key" sqlType="VARCHAR" precision="40" scale="0" nullable="false" jdbcType="12"/>
-      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="registration_registrationprofil_user_id_3f7685bb_fk_auth_user_id" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="tango" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="user_id" unique="true" columns="user_id"/>
     </table>
   </data-source>
   <data-source name="django-internet" uuid="e2f60d2f-6e2b-459d-8af8-69be6583d354">

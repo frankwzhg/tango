@@ -188,6 +188,8 @@ def user_profile_update(request):
     else:
         profile_form = UserProfileForm(request.POST)
         if profile_form.is_valid():
+            if 'picture' in request.FILES:
+                print "it is fine"
             user_profile = UserProfile.objects.get(user_id=user_id)
             profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
             profile_form.save()
