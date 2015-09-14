@@ -17,6 +17,10 @@ from django.contrib import messages
 
 # Create your views here.
 
+def default(request):
+    # define a view to disply a static homepage
+    return render_to_response('rango/index.html')
+
 def index(request):
     ## this version for first index page
     # #Contruct a dictionary to pass to template engine as its context.
@@ -80,7 +84,7 @@ def index(request):
         request.session['visits'] = visits
 
     context_dict['visits'] = visits
-    response = render(request, 'rango/index.html', context_dict)
+    response = render(request, 'rango/rango_index.html', context_dict)
     # Return response back to the user, updating any cookies that need changed
     return response
 
