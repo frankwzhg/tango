@@ -57,3 +57,5 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('website', 'picture', 'birthday')
+
+class RegistrationForm(forms.CharField)

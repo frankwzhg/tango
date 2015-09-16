@@ -15,4 +15,5 @@ urlpatterns = patterns('',
             url(r'^user_profile_update/$', views.user_profile_update, name='user_profile_update'),
             url(r'^restricted/$', views.restricted, name='restricted'),
             url(r'^user_profile_add/$', views.user_profile_add, name='user_profile_add'),
+            url(r'^login/$', views.user_login, name='user_login'),
             )

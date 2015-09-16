@@ -7,7 +7,9 @@ from django.conf.urls.static import static
 import registration
 # from rango.urls import MyregistrationView
 class MyregistrationView(RegistrationView):
+    print "abc"
     def get_success_url(self, request, user):
+        print "def"
         return '/rango/'
 
 urlpatterns = patterns('',
