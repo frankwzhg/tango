@@ -6,6 +6,10 @@
  <form class="login" role="form" method="post" action=".">
   {% csrf_token %}
      <h1>Sign Up Here</h1>
+     {% if form_errors %}
+         <div style='color:darkred'>{{ form_errors }}</div>
+     {% endif %}
+
 {#     {{ user_form.as_p }}#}
     <div class="form-group" >
         <p class="required"> <label class="user_form_label" for="id_username">User Name:</label>
@@ -27,26 +31,10 @@
      </p>
     </div>
     <div class="form-group">
-        <p class="required"><label class="user_form_label" for="id_password1">Pass Word:</label>
-        <input type="password" name="password" class="login-input" placeholder="Enter password" />
+        <p class="required"><label class="user_form_label" for="id_password1">PassWord:</label>
+        <input type="password" name="password" class="login-input" id="id_password1" placeholder="Enter password" />
      </p>
     </div>
-    <div class="form-group">
-        <p class="required"><label class="user_form_label" for="id_password2">Pass Word (again):</label>
-        <input class="login-input" id="id_password2" name="password" type="password" placeholder="Enter password again" /></p>
-    </div>
-{#     <div class="form-group">#}
-{#        <p><label class="user_form_label" for="web-site">Web Site:</label>#}
-{#        <input class="login-input" id="web-site" name="website" type="url" placeholder="Web Site" /></p>#}
-{#    </div>#}
-{#     <div class="form-group">#}
-{#        <p><label class="user_form_label" for="picture">Photo:</label>#}
-{#        <input id="picture" name="picture" type="file" /></p>#}
-{#    </div>#}
-{#     <div class="form-group">#}
-{#        <p><label class="user_form_label" for="birhday">Birthday:</label>#}
-{#        <input class="login-input" id="birthday" name="birthday" type="date" placeholder="Birthday" /></p>#}
-{#    </div>#}
 
     <button type="submit" class="btn btn-default">Submit</button>
 

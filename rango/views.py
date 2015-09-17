@@ -191,8 +191,9 @@ def user_registration(request):
         user_form = UserForm(data=request.POST)
         # profile_form = UserProfileForm(data=request.POST)
         # If the two forms are valid...
+        # username = request.POST.get('username')
+        # password = request.POST.get('password')
         if user_form.is_valid():
-            print "test"
             # Save the user's form data to the database.
             user = user_form.save()
 
@@ -217,13 +218,17 @@ def user_registration(request):
             # Update our variable to tell the template registration was successful.
             registered = True
 
+            return HttpResponseRedirect('/rango/login')
+
             # Invalid form or forms - mistakes or something else?
             # Print problems to the terminal.
             # They'll also be shown to the user.
         else:
-            print user_form.errors
-            print "test2"
+            form_errors = user_form.errors
+            # return HttpResponse(user_form.errors)
 
+            # print form_errors
+            return render_to_response('rango/registration.html', {'form_errors': form_errors}, context)
     # Not a HTTP POST, so we render our form using two ModelForm instances.
     # These forms will be blank, ready for user input.
     else:
@@ -231,8 +236,8 @@ def user_registration(request):
         # profile_form = UserProfileForm()
 
     # Render the template depending on the context.
-    # return render_to_response('rango/registration.html', {'user_form': user_form, 'registered': registered}, context)
-    return HttpResponseRedirect('/rango/')
+    return render_to_response('rango/registration.html', {'user_form': user_form, 'registered': registered}, context)
+    # return HttpResponseRedirect('/rango/')
 
 def user_profile_update(request):
     user_id = request.user.id
