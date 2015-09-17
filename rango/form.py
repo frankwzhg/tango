@@ -58,4 +58,3 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ('website', 'picture', 'birthday')
 
-class RegistrationForm(forms.CharField)

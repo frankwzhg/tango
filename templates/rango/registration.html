@@ -1,0 +1,57 @@
+{% extends "user_base.html" %}
+{% load i18n %}
+
+{% block body_content %}
+
+ <form class="login" role="form" method="post" action=".">
+  {% csrf_token %}
+     <h1>Sign Up Here</h1>
+{#     {{ user_form.as_p }}#}
+    <div class="form-group" >
+        <p class="required"> <label class="user_form_label" for="id_username">User Name:</label>
+        <input class="login-input"  id="id_username" maxlength="30" name="username" type="text"  placeholder="Enter username"/>
+        <span class="add-on"><i class="icon-user icon-white"></i></span>
+     </p>
+    </div>
+     <div class="form-group" >
+        <p class="required"> <label class="user_form_label" for="id_firstname">First Name:</label>
+        <input class="login-input"  id="id_firstname" maxlength="30" name="firstname" type="text"  placeholder="Enter firstname"/></p>
+    </div>
+     <div class="form-group" >
+        <p class="required"> <label class="user_form_label" for="id_lastname">List Name:</label>
+        <input class="login-input"  id="id_lastname" maxlength="30" name="lastname" type="text"  placeholder="Enter lastname"/></p>
+    </div>
+    <div class="form-group">
+        <p class="required"><label class="user_form_label" for="id_email">E-mail:</label>
+        <input class="login-input" id="id_email" name="email" type="email" placeholder="Enter email" />
+     </p>
+    </div>
+    <div class="form-group">
+        <p class="required"><label class="user_form_label" for="id_password1">Pass Word:</label>
+        <input type="password" name="password" class="login-input" placeholder="Enter password" />
+     </p>
+    </div>
+    <div class="form-group">
+        <p class="required"><label class="user_form_label" for="id_password2">Pass Word (again):</label>
+        <input class="login-input" id="id_password2" name="password" type="password" placeholder="Enter password again" /></p>
+    </div>
+{#     <div class="form-group">#}
+{#        <p><label class="user_form_label" for="web-site">Web Site:</label>#}
+{#        <input class="login-input" id="web-site" name="website" type="url" placeholder="Web Site" /></p>#}
+{#    </div>#}
+{#     <div class="form-group">#}
+{#        <p><label class="user_form_label" for="picture">Photo:</label>#}
+{#        <input id="picture" name="picture" type="file" /></p>#}
+{#    </div>#}
+{#     <div class="form-group">#}
+{#        <p><label class="user_form_label" for="birhday">Birthday:</label>#}
+{#        <input class="login-input" id="birthday" name="birthday" type="date" placeholder="Birthday" /></p>#}
+{#    </div>#}
+
+    <button type="submit" class="btn btn-default">Submit</button>
+
+ </form>
+
+
+
+{% endblock %}

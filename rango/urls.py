@@ -16,4 +16,6 @@ urlpatterns = patterns('',
             url(r'^restricted/$', views.restricted, name='restricted'),
             url(r'^user_profile_add/$', views.user_profile_add, name='user_profile_add'),
             url(r'^login/$', views.user_login, name='user_login'),
+            url(r'^registrate/$', views.user_registration, name='user_registrate'),
+            url(r'logout/$', views.user_logout, name='user_logout'),
             )
