@@ -14,6 +14,8 @@ from django.contrib.auth import logout
 from datetime import datetime
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext as _
 
 # Create your views here.
 
@@ -21,6 +23,7 @@ def default(request):
     # define a view to disply a static homepage
     return render_to_response('rango/index.html')
 
+@login_required
 def index(request):
     ## this version for first index page
     # #Contruct a dictionary to pass to template engine as its context.
@@ -195,6 +198,10 @@ def user_registration(request):
         # password = request.POST.get('password')
         if user_form.is_valid():
             # Save the user's form data to the database.
+            password = request.POST.get('password')
+            if len(password)<4:
+                pass_word_error = "your password is too short"
+                return render_to_response('rango/registration.html', {'pass_word_error': pass_word_error}, context)
             user = user_form.save()
 
             # Now we hash the password with the set_password method.
@@ -218,7 +225,7 @@ def user_registration(request):
             # Update our variable to tell the template registration was successful.
             registered = True
 
-            return HttpResponseRedirect('/rango/login')
+            return HttpResponseRedirect('/rango/')
 
             # Invalid form or forms - mistakes or something else?
             # Print problems to the terminal.
