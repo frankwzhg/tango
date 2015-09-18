@@ -1,0 +1,27 @@
+{% extends 'user_base.html' %}
+{% load static %}
+{% load i18n %}
+{% block body_content %}
+{#    {% if message %}#}
+{#        dfdfdfsf#}
+{#    {% endif %}#}
+{#    hiaaodf#}
+{#    {{ message }}#}
+    <form class="login" method="POST" action=".">
+        {% csrf_token %}
+        <h1>please put your information</h1>
+
+        <div class="alert-warning">{{ username }}</div>
+        <div class="alert-warning">{{ mail }}</div>
+        <div class="alert-warning">{{ newpassword }}</div>
+        <div class="alert-warning">{{ form_error }}</div>
+
+        <lable>your UserName:</lable>
+        <input type="text" name="username" class="login-input" placeholder="User Name" autofocus />
+        <label>your registration mail:</label>
+        <input type="mail" name="mail" class="login-input" placeholder="Mail" />
+        <label>input your new password here</label>
+        <input type="password", name="newpassword", class="login-input" placeholder="Your New Password" />
+        <input type="submit" value="{% trans 'Reset' %}" />
+    </form>
+{% endblock %}

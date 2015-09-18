@@ -14,8 +14,9 @@ from django.contrib.auth import logout
 from datetime import datetime
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext as _
 
 # Create your views here.
 
@@ -199,15 +200,20 @@ def user_registration(request):
         if user_form.is_valid():
             # Save the user's form data to the database.
             password = request.POST.get('password')
+            email = request.POST.get('email')
+            emails = User.objects.values_list('email', flat=True)
+            if email in emails:
+                return render_to_response('rango/registration.html', {'mail_error': "your mail is registered"}, context)
             if len(password)<4:
                 pass_word_error = "your password is too short"
                 return render_to_response('rango/registration.html', {'pass_word_error': pass_word_error}, context)
-            user = user_form.save()
+            else:
+                user = user_form.save()
 
             # Now we hash the password with the set_password method.
             # Once hashed, we can update the user object.
-            user.set_password(user.password)
-            user.save()
+                user.set_password(user.password)
+                user.save()
 
              # Now sort out the UserProfile instance.
             # Since we need to set the user attribute ourselves, we set commit=False.
@@ -225,7 +231,9 @@ def user_registration(request):
             # Update our variable to tell the template registration was successful.
             registered = True
 
+
             return HttpResponseRedirect('/rango/')
+            # return render_to_response('rango/login.html', {'messages': "test"})
 
             # Invalid form or forms - mistakes or something else?
             # Print problems to the terminal.
@@ -455,3 +463,40 @@ def track_url(request):
 # def uer_profile(request):
 #      user_id = request.user.id
 #      print UserProfile.objects.get(user_id=user_id)
+
+def reset_password(request):
+    context_dic = {}
+    context_error_dic = {}
+    if request.method == "POST":
+        username = request.POST.get('username')
+        if username == '':
+            context_error_dic['username'] = "UserName can't be blank"
+        else:
+            context_dic['username'] = username
+        mail = request.POST.get('mail')
+        try:
+            validate_email(mail)
+            context_dic['mail'] = mail
+            print "test4"
+            print context_dic
+        except ValidationError:
+            context_error_dic['mail'] = "Please input right mail address"
+        newpassword = request.POST.get('newpassword')
+
+        user_profile = User.objects.filter(username=username, email=mail)
+        if user_profile:
+            print "test"
+            if newpassword == '' or len(newpassword) < 4:
+                print "test1"
+                context_error_dic['newpassword'] = "New password can't be blank or it is too short"
+            else:
+                context_dic['newpassword'] = newpassword
+                user = User.objects.get(username=username, email=mail)
+                user.set_password(newpassword)
+                user.save()
+                return redirect('/rango/login')
+        else:
+            context_error_dic['form_error'] = 'your information is not right'
+            return render_to_response('rango/passwd_reset.html', context_error_dic, RequestContext(request))
+
+    return render_to_response('rango/passwd_reset.html', context_error_dic, RequestContext(request))

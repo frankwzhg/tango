@@ -12,6 +12,10 @@
     {% if pass_word_error %}
         {{ pass_word_error }}
     {% endif %}
+    {% if mail_error %}
+        {{ mail_error }}
+    {% endif %}
+
 {#     {{ user_form.as_p }}#}
     <div class="form-group" >
         <p class="required"> <label class="user_form_label" for="id_username"><span class="glyphicon glyphicon-star-empty"></span>User Name:</label>

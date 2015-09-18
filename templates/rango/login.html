@@ -24,7 +24,7 @@
         <input type="text" name="username" class="login-input" placeholder="User Name" autofocus />
         <input type="password" name="password" class="login-input" placeholder="Password" />
         <input type="submit" value="{% trans 'Log in' %}" />
-        <p class="login-help">{% trans "Forgot password" %}? <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>!</p>
+        <p class="login-help">{% trans "Forgot password" %}? <a href="{% url 'reset_password' %}">{% trans "Reset it" %}</a>!</p>
         <p class="login-help">{% trans "Not member" %}? <a href="{% url 'user_registrate' %}">{% trans "Register" %}</a>!</p>
     </form>
 
