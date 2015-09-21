@@ -10,11 +10,21 @@
     <form class="login" method="POST" action=".">
         {% csrf_token %}
         <h1>please put your information</h1>
-
-        <div class="alert-warning">{{ username }}</div>
-        <div class="alert-warning">{{ mail }}</div>
-        <div class="alert-warning">{{ newpassword }}</div>
-        <div class="alert-warning">{{ form_error }}</div>
+        {% if username %}
+            <div class="alert-warning">{{ username }}</div>
+        {% endif %}
+        {% if mail %}
+            <div class="alert-warning">{{ mail }}</div>
+        {% endif %}
+        {% if newpassword %}
+            <div class="alert-warning">{{ newpassword }}</div>
+        {% endif %}
+        {% if form_error %}
+            <div class="alert-warning">{{ form_error }}</div>
+        {% endif %}
+{#        <div class="alert-warning">{{ mail }}</div>#}
+{#        <div class="alert-warning">{{ newpassword }}</div>#}
+{#        <div class="alert-warning">{{ form_error }}</div>#}
 
         <lable>your UserName:</lable>
         <input type="text" name="username" class="login-input" placeholder="User Name" autofocus />

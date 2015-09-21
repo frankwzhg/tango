@@ -1,20 +1,29 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+<head>
+    <script>
+  $(function() {
+    $( "#datepicker" ).;
+  });
+  </script>
+</head>
 {% block content %}
-    <form enctype="multipart/form-data" role="form" method="POST" action=".">
+    <form class="login" enctype="multipart/form-data" method="POST" action=".">
         {% csrf_token %}
-        <h2 class="form-signin-heading">modify your profile</h2>
+        <h1>modify your profile</h1>
         <div class="form-group">
             <p><label for="picture">url</label>
-            <input class="form-control" id="website" name="website" type="url" value="{{ website }}" /></p>
+            <input class="login-input" id="website" name="website" type="url" value="{{ website }}" /></p>
         </div>
         <div class="form-group">
             <p><label for="birthday">Birthday</label>
-            <input class="form-control" id="birthday" name="birthday" type="date" value="{{ birth_day }}" /></p>
+{#            <input class="login-input" id="datepicker" name="birthday" type="date" value="{{ birth_day }}" /></p>#}
+            <p>Date: <input type="text" id="datepicker"></p>
         </div>
         <div>
             <p><label for="picture">your picture</label>
-            <input class="form-control" id="picture" name="picture" type="file"  /></p>
+            <img src="/media/{{ user_picture }}" />
+            <input id="picture" name="picture" type="file" /></p>
         </div>
 
         <button type="submit" class="btn btn-default">Submit</button>
