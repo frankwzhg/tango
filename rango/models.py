@@ -32,12 +32,15 @@ class UserProfile(models.Model):
 
     #The additional attributes we wish to include
     website = models.URLField(blank=True)
-    # picture = models.ImageField(upload_to='profile_images', blank=True)
     picture = models.ImageField(upload_to='profile_images', blank=True)
-    birthday = models.DateField()
+    # picture = models.ImageField(upload_to='profile_images', blank=True)
+    birthday = models.DateField(blank=True)
 
 
     # Override the __unicode__() method to return out something meanningful
     def __unicode__(self):
         return self.user.username
 
+
+# class EModel(models.Model):
+#     date = models.DateField(blank=False)

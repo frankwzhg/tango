@@ -1,34 +1,72 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-<head>
-    <script>
-  $(function() {
-    $( "#datepicker" ).;
-  });
-  </script>
-</head>
+{#{% block content %}#}
+{#<!DOCTYPE html>#}
+{#    <html>#}
+{#        <head>#}
+{% block header %}
+    <meta charset="utf-8">
+  <title>jQuery UI Datepicker - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'css/user_admin.css' %}" type="text/css">
+{#  <script>#}
+{#  $(function() {#}
+{#    $( "#datepicker" ).datepicker();#}
+{#  });#}
+{#  </script>#}
+{% endblock %}
+{#    <body>#}
 {% block content %}
     <form class="login" enctype="multipart/form-data" method="POST" action=".">
         {% csrf_token %}
         <h1>modify your profile</h1>
         <div class="form-group">
-            <p><label for="picture">url</label>
+            <p><label for="url">url</label>
             <input class="login-input" id="website" name="website" type="url" value="{{ website }}" /></p>
         </div>
         <div class="form-group">
             <p><label for="birthday">Birthday</label>
-{#            <input class="login-input" id="datepicker" name="birthday" type="date" value="{{ birth_day }}" /></p>#}
-            <p>Date: <input type="text" id="datepicker"></p>
+            <input class="login-input" id="datepicker" name="birthday" type="date" value="{{ birth_day }}" /></p>
         </div>
-        <div>
-            <p><label for="picture">your picture</label>
-            <img src="/media/{{ user_picture }}" />
-            <input id="picture" name="picture" type="file" /></p>
-        </div>
-
+{#        <div class="row">#}
+{#            <label for="picture">your picture</label>#}
+{#            <p><img class="col-md-5" style="height:80px;width:90px;margin-left:10px" src="/media/{{ user_picture }}" />#}
+{#            <input class="col-md-7" id="picture" name="picture" type="file" value="/media/{{ user_picture }}" /></p>#}
+{#        </div>#}
         <button type="submit" class="btn btn-default">Submit</button>
-        </form>
+    </form>
+{#    </body>#}
+{#    </html>#}
 {% endblock %}
+
+{% block script %} <script> $("#datepicker").datepicker(); </script>{% endblock %}
+{#    <form class="login" enctype="multipart/form-data" method="POST" action=".">#}
+{#        {% csrf_token %}#}
+{#        <h1>modify your profile</h1>#}
+{#        <div class="form-group">#}
+{#            <p><label for="picture">url</label>#}
+{#            <input class="login-input" id="website" name="website" type="url" value="{{ website }}" /></p>#}
+{#        </div>#}
+{#        <div class="form-group">#}
+{#            <p><label for="birthday">Birthday</label>#}
+{#            <input class="login-input" id="datepicker" name="birthday" type="date" value="{{ birth_day }}" /></p>#}
+{#            <p>Date: <input type="text" id="datepicker"></p>#}
+{#        </div>#}
+{#        <div>#}
+{#            <p><label for="picture">your picture</label>#}
+{#            <img style="height: 80px;width: 70px" src="/media/{{ user_picture }}" />#}
+{#            <input id="picture" name="picture" type="file" /></p>#}
+{#        </div>#}
+{#        <button type="submit" class="btn btn-default">Submit</button>#}
+{##}
+{#        </form>#}
+{#    {{ user_id }}#}
+{#    {{ form }}#}
+{#{% endblock %}#}
 
 {#<!DOCTYPE html>#}
 {#<html>#}

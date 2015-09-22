@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>change title picture</title>
+    </head>
+    <body>
+        {{ scuess }}
+        <form class="form-group" id="change_pic" enctype="multipart/form-data" method="POST" action="">
+            {% csrf_token %}
+            <div class="form-group">
+            <p><label for="picture">your picture</label>
+            <input class="form-control" id="picture" name="picture" type="file"  /></p>
+        </div>
+            <button class="btn btn-default btn-primary"  value="submit">submit</button>
+        </form>
+    </body>
+</html>

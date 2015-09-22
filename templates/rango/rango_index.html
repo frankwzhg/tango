@@ -1,10 +1,19 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title_block %}Rango index{% endblock %}
+{% block header %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" type="text/css">
+{% endblock %}
 {% block content %}
     {% if user.is_authenticated %}
         <div class="page-header">
-            <h1>Rango says... hello {{ user.username }}!</h1>
+            {% if user_pic == '' %}
+                <h1>Rango says... hello  {{ user.username }}!<a href="{% url 'change_pic' %}"><span style="float:right">your photo</span> </a></h1>
+            {% else %}
+
+                <h1>Rango says... hello  {{ user.username }}!<a href="{% url 'change_pic' %}"><img style="width:70px;height: 80px;margin: 0px auto;float:right" src="/media/{{ user_pic }}" /></a></h1>
+            {% endif %}
         {% else %}
             <h1>Rango says... hello world!</h1>
         {% endif %}

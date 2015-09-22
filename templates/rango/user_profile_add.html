@@ -1,21 +1,34 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% block title_block %}Rango add profile{% endblock %}
+{% block header %}
+     <meta charset="utf-8">
+     <title>jQuery UI Datepicker - Default functionality</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" type="text/css">
+{% endblock %}
 {% block content %}
-    <form enctype="multipart/form-data" role="form" method="POST" action=".">
+    <form class="login" enctype="multipart/form-data" role="form" method="POST" action=".">
         {% csrf_token %}
-        <h2 class="form-signin-heading">modify your profile</h2>
+        <h2 class="form-signin-heading">add your profile</h2>
         <div class="form-group">
             <p><label for="website">url</label>
             <input class="form-control" id="website" name="website" type="url" value="{{ website }}" /></p>
         </div>
-        <div class="form-group">
-            <p><label for="picture">your picture</label>
-            <input class="form-control" id="picture" name="picture" type="file"  /></p>
-        </div>
+
         <div class="form-group">
             <p><label for="birthday">Birthday</label>
-            <input class="form-control" id="birthday" name="birthday" type="date" value="{{ birth_day }}" /></p>
+            <input class="form-control" id="datepicker" name="birthday" type="date" value="{{ birth_day }}" /></p>
+        </div>
+        <div class="form-group">
+            <p><label for="picture">your picture</label>
+            <input id="picture" name="picture" type="file"  /></p>
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
         </form>
 {% endblock %}
+{% block script %} <script> $("#datepicker").datepicker(); </script>{% endblock %}

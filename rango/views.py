@@ -6,7 +6,7 @@ from rango.models import Category, Page, UserProfile
 # from rango.models import Page
 from rango.form import PageForm
 from rango.form import CategoryForm
-from rango.form import UserForm, UserProfileForm
+from rango.form import UserForm, UserProfileForm, ChangePicForm, ChangePasswordForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -16,16 +16,22 @@ from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 
 # Create your views here.
 
-def default(request):
-    # define a view to disply a static homepage
-    return render_to_response('rango/index.html')
+# def default(request):
+#     # define a view to disply a static homepage
+#     return render_to_response('rango/index.html')
 
 @login_required
 def index(request):
+    user_id = request.user.id
+    try:
+        user_profile = UserProfile.objects.get(user_id=user_id)
+        user_pic = user_profile.picture
+    except ObjectDoesNotExist:
+        user_pic = ""
     ## this version for first index page
     # #Contruct a dictionary to pass to template engine as its context.
     # #Note the key boldmessage is the same as {{boldmessage}} in the template
@@ -43,7 +49,7 @@ def index(request):
     # Place the list in our context dictionary which will pass to the template engine
     category_list = Category.objects.all()
     page_list = Page.objects.order_by('views')[:5]
-    context_dict = {'categories': category_list, 'pages': page_list}
+    context_dict = {'categories': category_list, 'pages': page_list, 'user_pic': user_pic}
 
 
 
@@ -144,7 +150,8 @@ def add_category(request):
             return index(request)
         else:
             # The supplied form contained errors - just print them on the terminal
-            print form.errors
+            # print form.errors
+            pass
 
     else:
         # If the request was not a Post, display the form to enter details.
@@ -158,7 +165,7 @@ def add_category(request):
 def add_page(request, category_name_slug):
     try:
         cat = Category.objects.get(slug=category_name_slug)
-        print cat.id
+        # print cat.id
 
     except Category.DoesNotExist:
         cat = None
@@ -173,7 +180,8 @@ def add_page(request, category_name_slug):
                 page.save()
                 return category(request, category_name_slug)
         else:
-            print form.errors
+            # print form.errors
+            pass
 
     else:
         form = PageForm()
@@ -261,23 +269,28 @@ def user_profile_update(request):
 
         try:
             user_info = UserProfile.objects.get(user_id=user_id)
-            context_dic = {'user_id':user_info.user_id, 'user_picture':user_info.picture, 'birth_day':user_info.birthday, 'website':user_info.website}
+            context_dic = {'form': user_info, 'user_id': user_info.user_id, 'user_picture': user_info.picture, 'birth_day': user_info.birthday, 'website':user_info.website}
             return render(request, 'rango/user_profile_update.html', context_dic)
         except:
             return HttpResponseRedirect('/rango/user_profile_add')
     else:
         profile_form = UserProfileForm(request.POST)
         if profile_form.is_valid():
-            if 'picture' in request.FILES:
-                print "it is fine"
             user_profile = UserProfile.objects.get(user_id=user_id)
             profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
             profile_form.save()
             return redirect('/rango/')
+
         else:
             user_profile = UserProfile.objects.get(user_id=user_id)
             profile_form = UserProfileForm(instance=user_profile)
-            return render_to_response('rango/user_profile_update.html', {'form':profile_form}, context_instance=RequestContext(request))
+            url = request.POST.get("website")
+            birthday = request.POST.get("birthday")
+            pic = request.POST.get("picture")
+            # print url
+            # print birthday
+            # print pic
+            return render_to_response('rango/user_profile_update.html', {'form': profile_form}, context_instance=RequestContext(request))
         # user_info = UserProfile.objects.get(user_id=user_id)
         # form = UserProfileForm(request.POST, instance=user_info)
         # print "test1"
@@ -293,7 +306,7 @@ def user_profile_update(request):
 
 def user_profile_add(request):
     user_id = request.user.id
-    context_dict ={'user_id': user_id,}
+    context_dict ={'user_id': user_id}
     if request.method == "POST":
         form = UserProfileForm(request.POST)
         if form.is_valid():
@@ -302,8 +315,10 @@ def user_profile_add(request):
             if 'picture' in request.FILES:
                 form_count.picture = request.FILES['picture']
             form_count.save()
+            return HttpResponseRedirect('/rango/')
         else:
-            print messages.error(request, "error")
+            # print messages.error(request, "error")
+            pass
     # else:
     #     print "fault"
         # profiles = form.save(commit=False)
@@ -448,13 +463,13 @@ def track_url(request):
     if request.method == 'GET':
         if 'page_id' in request.GET:
             page_id = request.GET['page_id']
-            print 'page_id' + page_id
+            # print 'page_id' + page_id
             try:
                 page = Page.objects.get(id=page_id)
                 page.views = page.views + 1
                 page.save()
                 url = page.url
-                print url
+                # print url
             except:
                 pass
 
@@ -477,26 +492,72 @@ def reset_password(request):
         try:
             validate_email(mail)
             context_dic['mail'] = mail
-            print "test4"
-            print context_dic
+            # print "test4"
+            # print context_dic
         except ValidationError:
             context_error_dic['mail'] = "Please input right mail address"
         newpassword = request.POST.get('newpassword')
 
         user_profile = User.objects.filter(username=username, email=mail)
         if user_profile:
-            print "test"
+            # print "test"
             if newpassword == '' or len(newpassword) < 4:
-                print "test1"
+                # print "test1"
                 context_error_dic['newpassword'] = "New password can't be blank or it is too short"
             else:
                 context_dic['newpassword'] = newpassword
                 user = User.objects.get(username=username, email=mail)
                 user.set_password(newpassword)
                 user.save()
-                return redirect('/rango/login')
+                login_user = authenticate(username=username, password=newpassword)
+                login(request, login_user)
+                return redirect('/rango')
         else:
             context_error_dic['form_error'] = 'your information is not right'
             return render_to_response('rango/passwd_reset.html', context_error_dic, RequestContext(request))
 
     return render_to_response('rango/passwd_reset.html', context_error_dic, RequestContext(request))
+
+def changepic(request):
+    user_id = request.user.id
+    try:
+        object = UserProfile.objects.get(user_id=user_id)
+        # pic = object.picture
+        if request.method == "POST":
+           form = ChangePicForm(request.POST)
+           if form.is_valid():
+                object.picture = request.FILES['picture']
+                object.save()
+                return HttpResponseRedirect('/rango/')
+                # return render_to_response('rango/change_pic.html', {'scuess':"your profile is updated"}, RequestContext(request))
+        else:
+            return render_to_response('rango/change_pic.html', {}, RequestContext(request))
+    except ObjectDoesNotExist:
+        return  HttpResponseRedirect('user_profile_add')
+    # return render_to_response('rango/change_pic.html', {}, RequestContext(request))
+
+
+def changepasswd(request):
+    user_id = request.user.id
+    object = User.objects.get(id=user_id)
+    if request.method == 'POST':
+        print "test"
+        form = ChangePasswordForm(request.POST)
+        old_password = object.password
+        if old_password == request.POST.get('old_password'):
+
+            if form.is_valid():
+                newpassword1 = request.POST.get('new_password1')
+                newpassword2 = request.POST.get('new_password2')
+                if newpassword1 == newpassword2:
+                    object.password = request.POST.get('new_password1')
+                    object.save()
+                    return render_to_response('rango/change_password.html', {'scuess': "your password is resetted"}, RequestContext(request))
+                else:
+                    return render_to_response('rango/change_password.html', {'errors': "your password inputed is not same, please input again"}, RequestContext(request))
+            else:
+                return render_to_response('rango/change_password.html', {'form_error': "you submit wrong form, please check it"}, RequestContext(request))
+        else:
+            return render_to_response('rango/change_password.html', {'old_password': "please input your right old password"}, RequestContext(request))
+    else:
+        return render_to_response('rango/change_password.html', {}, RequestContext(request))

@@ -10,16 +10,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
-
+{#    <link rel="icon" href="http://getbootstrap.com/favicon.ico">#}
+{##}
     <title>{% block title %}How to Tango with Django!{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/user_admin.css' %}" type="text/css">
-
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/creative.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" type="text/css">
+{##}
+{#    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">#}
+{#    <link rel="stylesheet" href="{% static 'css/creative.css' %}" type="text/css">#}
+{#    <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}" type="text/css">#}
+{#    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}" type="text/css">#}
+{#    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" type="text/css">#}
+    {% block header %}{% endblock %}
 {#    <link href="{% static  'css/bootstrap.css' %}" rel="stylesheet" type="text/plain">#}
 {#    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet" type="text/css">#}
 {#    <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">#}
@@ -60,7 +61,7 @@
                         <ul class="nav navbar-nav navbar-right">
 {#                        <li><a href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>#}
                          <li><a href="{% url 'user_logout' %}">Logout</a></li>
-                        <li><a href="{% url 'auth_password_change' %}">Change Password</a></a> </li>
+                        <li><a href="{% url 'change_password' %}">Change Password</a></a> </li>
                         <li><a href="{% url 'user_profile_update' %}">Update your profile</a></li>
                         </ul>
 
@@ -80,6 +81,7 @@
     </div>
 
     <div class="container-fluid">
+
 {#      <div class="row row-offcanvas row-offcanvas-left">#}
 {#        <div class="col-sm-3 col-md-2 sidebar" id="sidebar" role="navigation">#}
 {#                {% block side_block %}#}
@@ -88,19 +90,20 @@
 {#        </div>#}
 {#        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">#}
                {% block content %}{% endblock %}
+                {% block script %}{% endblock %}
 {#        </div>#}
 {#      </div>#}
     </div>
-
+{{ pic }}
 
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+{#    <!-- Placed at the end of the document so the pages load faster -->#}
+{#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>#}
+{#    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>#}
+{#    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->#}
+{#    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>#}
 
   </body>
 </html>
