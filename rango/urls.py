@@ -20,5 +20,5 @@ urlpatterns = patterns('',
             url(r'logout/$', views.user_logout, name='user_logout'),
             url(r'reset_password/$', views.reset_password, name='reset_password'),
             url(r'change_pic', views.changepic, name='change_pic'),
-            url(r'change_password', views.changepasswd, name='change_password')
+            url(r'change_password', views.changepasswd, name='change_password'),
             )

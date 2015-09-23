@@ -541,11 +541,12 @@ def changepasswd(request):
     user_id = request.user.id
     object = User.objects.get(id=user_id)
     if request.method == 'POST':
-        print "test"
         form = ChangePasswordForm(request.POST)
-        old_password = object.password
-        if old_password == request.POST.get('old_password'):
-
+        old_password = request.POST.get('old_password')
+        user = authenticate(username=object.username, password=old_password)
+        print user
+        if user is not None:
+            print "test"
             if form.is_valid():
                 newpassword1 = request.POST.get('new_password1')
                 newpassword2 = request.POST.get('new_password2')
@@ -556,6 +557,7 @@ def changepasswd(request):
                 else:
                     return render_to_response('rango/change_password.html', {'errors': "your password inputed is not same, please input again"}, RequestContext(request))
             else:
+                print form.errors
                 return render_to_response('rango/change_password.html', {'form_error': "you submit wrong form, please check it"}, RequestContext(request))
         else:
             return render_to_response('rango/change_password.html', {'old_password': "please input your right old password"}, RequestContext(request))
