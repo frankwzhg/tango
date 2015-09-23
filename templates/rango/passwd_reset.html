@@ -22,6 +22,9 @@
         {% if form_error %}
             <div class="alert-warning">{{ form_error }}</div>
         {% endif %}
+        {% if success %}
+            <div class="alert-success">{{ success }}</div>
+        {% endif %}
 {#        <div class="alert-warning">{{ mail }}</div>#}
 {#        <div class="alert-warning">{{ newpassword }}</div>#}
 {#        <div class="alert-warning">{{ form_error }}</div>#}

@@ -1,22 +1,27 @@
-import profile
-from urllib3 import request
-from django.template import RequestContext
-from django.shortcuts import render, render_to_response
-from rango.models import Category, Page, UserProfile
-# from rango.models import Page
-from rango.form import PageForm
-from rango.form import CategoryForm
-from rango.form import UserForm, UserProfileForm, ChangePicForm, ChangePasswordForm
+
+from django.shortcuts import render, render_to_response, get_object_or_404
+from rango.form import *
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
+
 from datetime import datetime
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
+from django.core.mail import send_mail
+
+
+from django.http import HttpResponseRedirect, HttpResponse
+
+from django.core.context_processors import csrf
+from rango.models import *
+from django.template import RequestContext
+from django.core.mail import send_mail
+import hashlib, datetime, random
+from django.utils import timezone
 
 # Create your views here.
 
@@ -508,10 +513,13 @@ def reset_password(request):
                 context_dic['newpassword'] = newpassword
                 user = User.objects.get(username=username, email=mail)
                 user.set_password(newpassword)
+                user.is_active = False
                 user.save()
-                login_user = authenticate(username=username, password=newpassword)
-                login(request, login_user)
-                return redirect('/rango')
+                # context_dic['success'] = 'your password has been reset successfully, please login your mail box to active it and login again'
+                # send_mail('Reset password mail', 'your password has been reset, but it still not active', 'admin@frankdata.com.cn', [mail], fail_silently=False)
+                # login_user = authenticate(username=username, password=newpassword)
+                # login(request, login_user)
+                return render_to_response('rango/passwd_reset.html', {'success': 'your password has been reset successfully, please login your mail box to active it and login again'}, RequestContext(request))
         else:
             context_error_dic['form_error'] = 'your information is not right'
             return render_to_response('rango/passwd_reset.html', context_error_dic, RequestContext(request))
@@ -541,25 +549,103 @@ def changepasswd(request):
     user_id = request.user.id
     object = User.objects.get(id=user_id)
     if request.method == 'POST':
-        form = ChangePasswordForm(request.POST)
+        # form = ChangePasswordForm(request.POST)
         old_password = request.POST.get('old_password')
         user = authenticate(username=object.username, password=old_password)
         print user
+        print old_password
         if user is not None:
             print "test"
-            if form.is_valid():
-                newpassword1 = request.POST.get('new_password1')
-                newpassword2 = request.POST.get('new_password2')
-                if newpassword1 == newpassword2:
-                    object.password = request.POST.get('new_password1')
-                    object.save()
-                    return render_to_response('rango/change_password.html', {'scuess': "your password is resetted"}, RequestContext(request))
-                else:
-                    return render_to_response('rango/change_password.html', {'errors': "your password inputed is not same, please input again"}, RequestContext(request))
+            # if form.is_valid():
+            newpassword1 = request.POST.get('new_password1')
+            newpassword2 = request.POST.get('new_password2')
+            if newpassword1 == newpassword2:
+                print newpassword1
+                print newpassword2
+                user.set_password(newpassword1)
+                user.save()
+                return render_to_response('rango/change_password.html', {'scuess': "your password is resetted"}, RequestContext(request))
             else:
-                print form.errors
-                return render_to_response('rango/change_password.html', {'form_error': "you submit wrong form, please check it"}, RequestContext(request))
+                return render_to_response('rango/change_password.html', {'errors': "your password inputed is not same, please input again"}, RequestContext(request))
+            # else:
+            #     print form.errors
+            #     return render_to_response('rango/change_password.html', {'form_error': "you submit wrong form, please check it"}, RequestContext(request))
         else:
             return render_to_response('rango/change_password.html', {'old_password': "please input your right old password"}, RequestContext(request))
     else:
         return render_to_response('rango/change_password.html', {}, RequestContext(request))
+
+def activeuser(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        print "test"
+        print username
+        print password
+        user = authenticate(username=username, password=password)
+        print user
+        if user is not None:
+            print user
+            user.is_active = True
+            user.save()
+            login(request, user)
+            return HttpResponseRedirect('/rango')
+        else:
+            return render_to_response('rango/active_user.html', {'errors': "your information is wrong, please check it"}, RequestContext(request))
+    else:
+        print "test1"
+        return render_to_response('rango/active_user.html', {}, RequestContext(request))
+
+
+
+def userregistration(request):
+    args = {}
+    args.update(csrf(request))
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        args['form'] = form
+        if form.is_valid():
+            form.save() #save user to database if form is valid
+
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
+            activation_key = hashlib.sha1(salt+email).hexdigest()
+            key_expires = datetime.datetime.today() + datetime.timedelta(2)
+
+            #Get user by username
+
+            user = User.objects.get(username=username)
+
+            # Create and save user profile
+
+            new_profile = UserProfile(user=user, activation_key=activation_key, key_expires=key_expires)
+            new_profile.save()
+
+            # send email with activation key
+            email_subject = 'Account confirmation'
+            email_body = 'Hey %s, thanks for your signing up, To active your account, click this link with in 48 hours http://localhost:8000/acounts/confirm/%s' %(username, activation_key)
+            send_mail(email_subject, email_body, 'admin@frankdata.com.cn', [email], fail_silently=False)
+            return HttpResponseRedirect('/rango/registration_success.html')
+    else:
+        args['form'] = RegistrationForm()
+
+    return render_to_response('rango/register.html', args, RequestContext(request))
+
+def useractive(request, activation_key):
+    #  check if user is already logged in and if he is rediect him to other url, e.g. home
+    if request.user.is_authenticated():
+        HttpResponseRedirect('/rango')
+
+        # check if there is userprofile which matches the activation key ( if not then display 404)
+        user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
+
+        #check if the activation key has expired, if it hase then render confirm_expired.html
+        if user_profile.key_expires < timezone.now():
+            return render_to_response('rango/confirm_expired.html')
+        # if the key hasn't expired save user and set him as active and render some template to confirm activation
+        else:
+            user = user_profile.user
+            user.is_active = True
+            user.save()
+            return render_to_response('rango/confirm.html')

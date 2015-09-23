@@ -1,6 +1,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+import datetime
 # Create your models here.
 
 class Category(models.Model):
@@ -35,11 +36,17 @@ class UserProfile(models.Model):
     picture = models.ImageField(upload_to='profile_images', blank=True)
     # picture = models.ImageField(upload_to='profile_images', blank=True)
     birthday = models.DateField(blank=True)
+    activation_key = models.CharField(max_length=40, blank=True)
+    key_expires = models.DateTimeField(default=datetime.date.today())
 
 
     # Override the __unicode__() method to return out something meanningful
     def __unicode__(self):
         return self.user.username
+
+    class Meta:
+        verbose_name_plural = u'User profile'
+
 
 
 # class EModel(models.Model):
