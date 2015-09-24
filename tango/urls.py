@@ -7,9 +7,7 @@ from django.conf.urls.static import static
 import registration
 from django.views.generic import TemplateView
 class MyregistrationView(RegistrationView):
-    print "abc"
     def get_success_url(self, request, user):
-        print "def"
         return '/rango/'
 
 urlpatterns = patterns('',
@@ -21,6 +19,7 @@ urlpatterns = patterns('',
     url(r'^rango/', include('rango.urls')),
     # url(r'^$',  views.default, name='default'),
     url(r'^$', TemplateView.as_view(template_name='rango/index.html'), name='default'),
+    # url(r'^$', TemplateView.as_view(template_name='rango/registration_success.html'), name='registrate_success'),
     url(r'^accounts/register/$', MyregistrationView.as_view(), name='registration_register'),
     url(r'^accounts/', include('registration.backends.default.urls')),
 )

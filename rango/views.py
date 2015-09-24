@@ -575,27 +575,27 @@ def changepasswd(request):
     else:
         return render_to_response('rango/change_password.html', {}, RequestContext(request))
 
-def activeuser(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        print "test"
-        print username
-        print password
-        user = authenticate(username=username, password=password)
-        print user
-        if user is not None:
-            print user
-            user.is_active = True
-            user.save()
-            login(request, user)
-            return HttpResponseRedirect('/rango')
-        else:
-            return render_to_response('rango/active_user.html', {'errors': "your information is wrong, please check it"}, RequestContext(request))
-    else:
-        print "test1"
-        return render_to_response('rango/active_user.html', {}, RequestContext(request))
-
+# def activeuser(request):
+#     if request.method == 'POST':
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+#         print "test"
+#         print username
+#         print password
+#         user = authenticate(username=username, password=password)
+#         print user
+#         if user is not None:
+#             print user
+#             user.is_active = True
+#             user.save()
+#             login(request, user)
+#             return HttpResponseRedirect('/rango')
+#         else:
+#             return render_to_response('rango/active_user.html', {'errors': "your information is wrong, please check it"}, RequestContext(request))
+#     else:
+#         print "test1"
+#         return render_to_response('rango/active_user.html', {}, RequestContext(request))
+#
 
 
 def userregistration(request):
@@ -620,13 +620,16 @@ def userregistration(request):
             # Create and save user profile
 
             new_profile = UserProfile(user=user, activation_key=activation_key, key_expires=key_expires)
+            new_profile.birthday = datetime.date.today()
             new_profile.save()
 
             # send email with activation key
             email_subject = 'Account confirmation'
-            email_body = 'Hey %s, thanks for your signing up, To active your account, click this link with in 48 hours http://localhost:8000/acounts/confirm/%s' %(username, activation_key)
+            email_body = 'Hey %s, thanks for your signing up, To active your account, click this link with in 48 hours http://localhost:8000/rango/confirm/%s' %(username, activation_key)
             send_mail(email_subject, email_body, 'admin@frankdata.com.cn', [email], fail_silently=False)
-            return HttpResponseRedirect('/rango/registration_success.html')
+            return HttpResponse('your registration successfully')
+        # else:
+        #     return HttpResponse('you input information is not right, please contact your admin to get help')
     else:
         args['form'] = RegistrationForm()
 
@@ -638,14 +641,13 @@ def useractive(request, activation_key):
         HttpResponseRedirect('/rango')
 
         # check if there is userprofile which matches the activation key ( if not then display 404)
-        user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
+    user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
 
         #check if the activation key has expired, if it hase then render confirm_expired.html
-        if user_profile.key_expires < timezone.now():
-            return render_to_response('rango/confirm_expired.html')
+    if user_profile.key_expires < timezone.now():
+        return render_to_response('rango/confirm_expired.html')
         # if the key hasn't expired save user and set him as active and render some template to confirm activation
-        else:
-            user = user_profile.user
-            user.is_active = True
-            user.save()
-            return render_to_response('rango/confirm.html')
+    user = user_profile.user
+    user.is_active = True
+    user.save()
+    return HttpResponse('your account has been active')
