@@ -5,8 +5,6 @@
       <user-name>root</user-name>
       <user-password>dfeedfcbdfcedfc3df9edf9ddf9edf9d</user-password>
     </data-source>
-    <data-source name="django-internet" uuid="e2f60d2f-6e2b-459d-8af8-69be6583d354">
-      <user-name>root</user-name>
-    </data-source>
+    <data-source name="django-internet" uuid="e2f60d2f-6e2b-459d-8af8-69be6583d354" />
   </component>
 </project>
