@@ -1,0 +1,16 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>user active confirm</title>
+    </head>
+    <body>
+        {% if status %}
+            <h1>your account is {{ status }} now, you can click <span><a href={{ url }}>here</a></span>
+                return to
+                home
+        </h1>
+        {% endif %}
+
+    </body>
+</html>

@@ -77,10 +77,10 @@ def index(request):
         # Yes it does, get the value of this cookie
         # Cast the value to a python date/time object
         # print context_dict['top_five']
-        last_visit_time = datetime.strptime(last_visit[:-7], '%Y-%m-%d %H:%M:%S')
+        last_visit_time = datetime.datetime.strptime(last_visit[:-7], '%Y-%m-%d %H:%M:%S')
 
         # If it is been more than a day since the last visit ...
-        if (datetime.now()-last_visit_time).seconds > 5:
+        if (datetime.datetime.now()-last_visit_time).seconds > 5:
             visits = visits + 1
             context_dict['visits'] = visits
             # ... and flag that the cookie last visit needs to be update
@@ -95,7 +95,7 @@ def index(request):
         # response = render(request, 'rango/index.html', context_dict)
 
     if reset_last_visit_time:
-        request.session['last_visit'] = str(datetime.now())
+        request.session['last_visit'] = str(datetime.datetime.now())
         request.session['visits'] = visits
 
     context_dict['visits'] = visits
@@ -636,18 +636,37 @@ def userregistration(request):
     return render_to_response('rango/register.html', args, RequestContext(request))
 
 def useractive(request, activation_key):
-    #  check if user is already logged in and if he is rediect him to other url, e.g. home
-    if request.user.is_authenticated():
-        HttpResponseRedirect('/rango')
 
-        # check if there is userprofile which matches the activation key ( if not then display 404)
+    status_dic = {}
+    # user_profile = UserProfile.objects.get(activation_key=activation_key)
+    # user = user_profile.user
+    # #  check if user is already logged in and if he is rediect him to other url, e.g. home
+    # if 'test2'.is_authenticated():
+    #     status_dic['status'] = 'Logged in'
+    #     status_dic['url'] = "../../"
+    # else:
+    #     print request.user
+    #     # check if the user account is actived, but he/she has not log in
+    #     if request.user.is_active:
+    #         print "test"
+    #         status_dic['status'] = 'active'
+    #         status_dic['url'] = '../user_login'
+    #     else:
+    #         status_dic['status'] = 'inactive'
+    #
+    #         # check if there is userprofile which matches the activation key ( if not then display 404)
     user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
 
-        #check if the activation key has expired, if it hase then render confirm_expired.html
+    #check if the activation key has expired, if it hase then render confirm_expired.html
     if user_profile.key_expires < timezone.now():
-        return render_to_response('rango/confirm_expired.html')
+        status_dic['status'] = 'expired'
+        status_dic['url'] = 'please contact your admin'
         # if the key hasn't expired save user and set him as active and render some template to confirm activation
-    user = user_profile.user
-    user.is_active = True
-    user.save()
-    return HttpResponse('your account has been active')
+    else:
+        user = user_profile.user
+        user.is_active = True
+        user.save()
+        status_dic['status'] = 'active'
+        status_dic['url'] = '../../login'
+    print status_dic
+    return render_to_response('rango/user_active.html', status_dic, RequestContext(request))
