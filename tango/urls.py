@@ -22,6 +22,7 @@ urlpatterns = patterns('',
     # url(r'^$', TemplateView.as_view(template_name='rango/registration_success.html'), name='registrate_success'),
     url(r'^accounts/register/$', MyregistrationView.as_view(), name='registration_register'),
     url(r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^learn/', include('learn.urls')),
 )
 
 if settings.DEBUG:

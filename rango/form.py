@@ -81,19 +81,20 @@ class RegistrationForm(UserCreationForm):
         fields = ('first_name', 'last_name', 'email', 'username', 'password1', 'password2')
 
 # Clean email field
-def clean_email(self):
-    email = self.cleaned_data["email"]
-    try:
-        User._default_manager.get(email=email)
-    except User.DoesNotExist:
-        return email
-    raise forms.ValidationError('duplicate email')
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        try:
+            print "test"
+            User._default_manager.get(email=email)
+        except User.DoesNotExist:
+            return email
+        raise forms.ValidationError('duplicate email')
 
-# modify save() method so that we can set user.is_active to False when we first create our user
-def save(self, commit = True):
-    user = super(RegistrationForm, self).save(commit=False)
-    user.email = self.cleaned_data['email']
-    if commit:
-        user.is_active = False
-        user.save()
-    return user
+    # modify save() method so that we can set user.is_active to False when we first create our user
+    def save(self, commit = True):
+        user = super(RegistrationForm, self).save(commit=False)
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.is_active = False
+            user.save()
+        return user
