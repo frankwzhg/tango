@@ -1,12 +1,27 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}this is a about page{% endblock %}
+{% block header %}
+
+{#    <script src="{% static 'js/jquery.js' %}"></script>#}
+{#    <script src="{% static 'js/rango-jquery.js' %}"></script>#}
+{% endblock %}
 {% block content %}
+
     <div class="page-header">
         <h1>this is a about page</h1>
         <p>this is template for about page, introduction this web</p>
-        <img width='1000' height="900" src ="{% static "images/about.JPG" %}" alt="Picture of Rango" />
+{#        <img width='1000' height="900" src ="{% static "images/about.JPG" %}" alt="Picture of Rango" />#}
+        <img width='1000' height="900" src ="/static/images/about.JPG" alt="Picture of Rango" />
     </div>
-
+    <button onclick="alert('You clicked the button using javascript');">
+        Click me - I run Javascript
+    </button>
+    <button id="about-btn">Click Me - I'm Javascript on Speed</button>
+    <p>This is a example</p>
+    <p>This is another example</p>
+    <div id="msg">Hello</div>
+    <button>Change User</button>
+    <script src="{% static 'js/main.js' %}"></script>
 {% endblock %}
 

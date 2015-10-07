@@ -3240,14 +3240,14 @@
     </table>
     <table name="accounts_userprofle" schema="" catalog="smartdata" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="website" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
       <column name="birthday" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
       <column name="picture" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
       <column name="activation_key" sqlType="VARCHAR" precision="40" scale="0" nullable="false" jdbcType="12"/>
       <column name="key_expires" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
-      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="accounts_userprofle_user_id_1d8dffb6_fk_auth_user_id" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="smartdata" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="user_id" unique="true" columns="user_id"/>
     </table>
     <table name="auth_group" schema="" catalog="smartdata" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -3293,7 +3293,6 @@
       <column name="is_active" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
       <column name="date_joined" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <exported-key name="accounts_userprofle_user_id_1d8dffb6_fk_auth_user_id" table="accounts_userprofle" schema="" catalog="smartdata" columns="user_id"/>
       <exported-key name="auth_user_groups_user_id_24702650_fk_auth_user_id" table="auth_user_groups" schema="" catalog="smartdata" columns="user_id"/>
       <exported-key name="auth_user_user_permissions_user_id_7cd7acb6_fk_auth_user_id" table="auth_user_user_permissions" schema="" catalog="smartdata" columns="user_id"/>
       <exported-key name="django_admin_log_user_id_1c5f563_fk_auth_user_id" table="django_admin_log" schema="" catalog="smartdata" columns="user_id"/>

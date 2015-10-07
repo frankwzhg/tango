@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from tango.settings import *
+
 # Create your views here.
 from os import walk
 def video(request):
@@ -13,4 +14,5 @@ def video(request):
     videos['media'] = MEDIA_URL
     print videos
 
-    return render(request, "learn/player.html", videos)
+    # return render(request, "learn/player.html", videos)
+    return render_to_response('learn/player.html', videos)

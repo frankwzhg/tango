@@ -20,7 +20,9 @@
 </div>
 <script>
 var myVideo=document.getElementById("video1");
-var videoList=['English2.mp4','English.mp4'];
+{#var videoList=['English2.mp4','English.mp4'];#}
+var videoList = {{ videos }}
+videoList
 var index = videoList.indexOf(window.currentVideoName);
 index
 //Next button
