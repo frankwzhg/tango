@@ -24,4 +24,5 @@ urlpatterns = patterns('',
             url(r'change_pic', views.changepic, name='change_pic'),
             url(r'change_password', views.changepasswd, name='change_password'),
             url(r'active_user/$', views.useractive, name='active_user'),
+            url(r'^like_category/$', views.like_category, name='like_category'),
             )

@@ -252,3 +252,12 @@ input, textarea, select, label {
   color: aliceblue;
 }
 
+.body_content{
+  width:400px;
+  margin: 100px auto;
+  padding: 10px 20px;
+  text-align: center;
+  position:relative;
+  bottom:10px;
+  top:150px;
+}

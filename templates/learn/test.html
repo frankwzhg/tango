@@ -1,41 +1,19 @@
-{% load static %}
 <!DOCTYPE html>
 <html>
-<body>
-<div style="text-align:center">
-  <button onclick="playPause()">Play/Pause</button>
-  <button onclick="nextButton()">Next</button>
-  <br>
-  <video id="video1" width="420">
-    <source src="{{ media }}learn/English.mp4" type="video/mp4">
-    <source  type="video/mp3">
-     <source type="video/ogg">
-    Your browser does not support HTML5 video.
-  </video>
-</div>
+<head>
+    <meta charset="utf-8">
+    <script src="/staic/js/jquery.1.11.1.min.js"></script>
 <script>
-var myVideo=document.getElementById("video1");
-var videoList=['English.mp4','English2.mp4'];
-var index = videoList.indexOf(window.currentVideoName);
-//Next button
-function nextButton(){
-myVideo.pause();
-myVideo.currentTime=0;
-index = index + 1;
-if(index==videoList.length)
-index = 0;
-alert(videoList[index]);
-myVideo.src = 'C:/'+videoList[index];
-window.currentVideoName=videoList[index];
-myVideo.play();
-}
-function playPause()
-{
-if (myVideo.paused)
-  myVideo.play();
-else
-  myVideo.pause();
-}
+    $(document).ready(function(){
+        $("p").click(function(){
+        $(this).hide();
+        });
+    });
 </script>
+</head>
+<body>
+<p>如果您点击我，我会消失。</p>
+<p>点击我，我会消失。</p>
+<p>也要点击我哦。</p>
 </body>
 </html>

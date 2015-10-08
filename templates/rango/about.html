@@ -1,27 +1,33 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}this is a about page{% endblock %}
-{% block header %}
-
-{#    <script src="{% static 'js/jquery.js' %}"></script>#}
-{#    <script src="{% static 'js/rango-jquery.js' %}"></script>#}
-{% endblock %}
 {% block content %}
+<p>如果您点击我，我会消失。</p>
+<p>点击我，我会消失。</p>
+<p>也要点击我哦。</p>
 
-    <div class="page-header">
-        <h1>this is a about page</h1>
-        <p>this is template for about page, introduction this web</p>
-{#        <img width='1000' height="900" src ="{% static "images/about.JPG" %}" alt="Picture of Rango" />#}
-        <img width='1000' height="900" src ="/static/images/about.JPG" alt="Picture of Rango" />
-    </div>
-    <button onclick="alert('You clicked the button using javascript');">
-        Click me - I run Javascript
-    </button>
-    <button id="about-btn">Click Me - I'm Javascript on Speed</button>
-    <p>This is a example</p>
-    <p>This is another example</p>
-    <div id="msg">Hello</div>
-    <button>Change User</button>
-    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
+<script>
+    $(document).ready(function(){
+        $("p").click(function(){
+        $(this).hide();
+        });
+    });
+</script>
+
 {% endblock %}
 
+{#    <p>At Mozilla, we’re a global community of</p>#}
+{#    #}
+{#    <ul> <!-- changed to list in the tutorial -->#}
+{#      <li>technologists</li>#}
+{#      <li>thinkers</li>#}
+{#      <li>builders</li>#}
+{#    </ul>#}
+{##}
+{#    <p>working together to keep the Internet alive and accessible, so people worldwide can be informed contributors and creators of the Web. We believe this act of human collaboration across an open platform is essential to individual growth and our collective future.</p>#}
+{##}
+{#    <p>Read the <a href="https://www.mozilla.org/en-US/about/manifesto/">Mozilla Manifesto</a> to learn even more about the values and principles that guide the pursuit of our mission.</p>#}
+
+  </body>
+</html>
