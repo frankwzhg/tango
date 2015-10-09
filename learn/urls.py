@@ -7,4 +7,5 @@ from registration.backends.simple.views import RegistrationView
 
 urlpatterns = patterns('',
             url(r'^$', views.video, name='player'),
+            url(r'^videoupload', views.video_upload_view, name='video_upload'),
             )

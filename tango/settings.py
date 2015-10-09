@@ -47,7 +47,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     #'rango.templatertags.rango_extras',
     'rango',
-    # 'registration',
+    'learn',
 
 )
 

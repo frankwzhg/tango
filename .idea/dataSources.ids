@@ -3406,6 +3406,7 @@
       <exported-key name="auth_user_groups_user_id_24702650_fk_auth_user_id" table="auth_user_groups" schema="" catalog="tango" columns="user_id"/>
       <exported-key name="auth_user_user_permissions_user_id_7cd7acb6_fk_auth_user_id" table="auth_user_user_permissions" schema="" catalog="tango" columns="user_id"/>
       <exported-key name="django_admin_log_user_id_1c5f563_fk_auth_user_id" table="django_admin_log" schema="" catalog="tango" columns="user_id"/>
+      <exported-key name="rango_userprofile_user_id_77f0b36_fk_auth_user_id" table="rango_userprofile" schema="" catalog="tango" columns="user_id"/>
       <index name="username" unique="true" columns="username"/>
     </table>
     <table name="auth_user_groups" schema="" catalog="tango" type="TABLE">
@@ -3475,6 +3476,15 @@
       <column name="name" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
+    <table name="learn_videosmodel" schema="" catalog="tango" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="video_name" sqlType="VARCHAR" precision="128" scale="0" nullable="false" jdbcType="12"/>
+      <column name="video_path" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="upload_date" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
+      <column name="video_owner" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="video_name" unique="true" columns="video_name"/>
+    </table>
     <table name="rango_category" schema="" catalog="tango" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="name" sqlType="VARCHAR" precision="128" scale="0" nullable="false" jdbcType="12"/>
@@ -3482,30 +3492,30 @@
       <column name="likes" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="slug" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <exported-key name="Category_id_refs_id_03c06b6c" table="rango_page" schema="" catalog="tango" columns="Category_id"/>
+      <exported-key name="rango_page_Category_id_21bd5f0b_fk_rango_category_id" table="rango_page" schema="" catalog="tango" columns="Category_id"/>
       <index name="name" unique="true" columns="name"/>
       <index name="slug" unique="true" columns="slug"/>
     </table>
     <table name="rango_page" schema="" catalog="tango" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="Category_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="title" sqlType="VARCHAR" precision="128" scale="0" nullable="false" jdbcType="12"/>
       <column name="url" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
       <column name="views" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="Category_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="Category_id_refs_id_03c06b6c" columns="Category_id" ref-table="rango_category" ref-schema="" ref-catalog="tango" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
-      <index name="rango_page_d2343482" unique="false" columns="Category_id"/>
+      <foreign-key name="rango_page_Category_id_21bd5f0b_fk_rango_category_id" columns="Category_id" ref-table="rango_category" ref-schema="" ref-catalog="tango" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="rango_page_e9c8a574" unique="false" columns="Category_id"/>
     </table>
     <table name="rango_userprofile" schema="" catalog="tango" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="website" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
       <column name="picture" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
       <column name="birthday" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
       <column name="activation_key" sqlType="VARCHAR" precision="40" scale="0" nullable="false" jdbcType="12"/>
       <column name="key_expires" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <index name="user_id" unique="true" columns="user_id"/>
+      <foreign-key name="rango_userprofile_user_id_77f0b36_fk_auth_user_id" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="tango" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
     </table>
     <table name="auth_group" schema="" catalog="test" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>

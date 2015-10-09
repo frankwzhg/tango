@@ -314,6 +314,7 @@ def user_profile_add(request):
     context_dict ={'user_id': user_id}
     if request.method == "POST":
         form = UserProfileForm(request.POST)
+        print form
         if form.is_valid():
             form_count = form.save(commit=False)
             form_count.user_id = user_id

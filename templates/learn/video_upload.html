@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>video uplad</title>
+    </head>
+    <body>
+         <form enctype="multipart/form-data" method="POST" action="">
+             {% csrf_token %}
+             <input type="text" name="video_name" placeholder="Video Name" value=
+                     "{{ video_name }}"/><br>
+             <input type="file" name="video_path" />
+             <button type="submit">upload</button>
+         </form>
+    </body>
+</html>
