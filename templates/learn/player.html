@@ -6,7 +6,29 @@
     <script src="{% static 'js/bootstrap.js' %}"></script>
 </head>
 <body>
+<p>
+Name: <span id="jname"></span><br />
+Age: <span id="jage"></span><br />
+Address: <span id="jstreet"></span><br />
+Phone: <span id="jphone"></span><br />
+</p>
+<script type="text/javascript">
+    for (elem in {{ video_json }}){
+        document.write({{ video_json }}[elem])
+    }
+document.write(json_data)
+{#document.write(json_data.fields.upload_date);#}
+{#//while running this code the template will be appended in your div with json data#}
+{#document.getElementById('jname').innerHTML=document.write(json_data.test.num);#}
 
+</script>
+
+{{ video_json }}
+
+<table id="dog_table">
+ <tbody >
+ </tbody>
+</table>
 <div style="text-align:center">
   <button onclick="playPause()">Play/Pause</button>
   <button onclick="nextButton()">Next</button>
