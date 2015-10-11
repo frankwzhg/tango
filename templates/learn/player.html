@@ -11,19 +11,20 @@ Name: <span id="jname"></span><br />
 Age: <span id="jage"></span><br />
 Address: <span id="jstreet"></span><br />
 Phone: <span id="jphone"></span><br />
-</p>
-<script type="text/javascript">
-    for (elem in {{ video_json }}){
-        document.write({{ video_json }}[elem])
-    }
-document.write(json_data)
-{#document.write(json_data.fields.upload_date);#}
-{#//while running this code the template will be appended in your div with json data#}
-{#document.getElementById('jname').innerHTML=document.write(json_data.test.num);#}
+{#</p>#}
+{#<script type="text/javascript">#}
+{#    var video_json = jQuery.parseJSON('{{ video_json }}'.replace(/&quot;/ig, '"'))#}
+{#    var test = jQuery.parseJSON('{{ test }}'.replace(/&quot;/ig, '"'))#}
+{#    document.write(test.test.num)#}
+{#    var Vname = []#}
+{#    for(var i in video_json){#}
+{#        Vname.push(video_json[i].fields.video_name)#}
+{#    }#}
+{#    document.write(Vname)#}
+{#</script>#}
 
-</script>
 
-{{ video_json }}
+{#{{ test }}#}
 
 <table id="dog_table">
  <tbody >
@@ -34,38 +35,48 @@ document.write(json_data)
   <button onclick="nextButton()">Next</button>
   <br>
   <video id="video1" width="420">
-    <source src="{{ media }}learn/English.mp4" type="video/mp4">
+    <source src="{{ media }}English.mp4" type="video/mp4">
     <source  type="video/mp3">
      <source type="video/ogg">
     Your browser does not support HTML5 video.
   </video>
 </div>
-<script>
-var myVideo=document.getElementById("video1");
-{#var videoList=['English2.mp4','English.mp4'];#}
-var videoList = {{ videos }}
-videoList
-var index = videoList.indexOf(window.currentVideoName);
-index
-//Next button
-function nextButton(){
-    myVideo.pause();
-    myVideo.currentTime=0;
-    index = index + 1;
-    if(index==videoList.length)
-    index = 0;
-    alert(videoList[index]);
-    myVideo.src = '{{ media }}learn/'+videoList[index];
-    window.currentVideoName=videoList[index];
-    myVideo.play();
-}
-function playPause()
-{
-    if (myVideo.paused)
-      myVideo.play();
-    else
-      myVideo.pause();
-}
-</script>
+{#<script type="text/javascript">#}
+{#    var video_json = jQuery.parseJSON('{{ video_json }}'.replace(/&quot;/ig, '"'))#}
+{#    var test = jQuery.parseJSON('{{ test }}'.replace(/&quot;/ig, '"'))#}
+{#    document.write(test.test.num)#}
+{#    var Vname = []#}
+{#    for(var i in video_json){#}
+{#        Vname.push(video_json[i].fields.video_name)#}
+{#    }#}
+{#    document.write(Vname)#}
+{##}
+{##}
+{#var myVideo=document.getElementById("video1");#}
+{#var videoList=Vname;#}
+{#var videoList = {{ videos }}#}
+{#videoList#}
+{#var index = videoList.indexOf(window.currentVideoName);#}
+{#index#}
+{#//Next button#}
+{#function nextButton(){#}
+{#    myVideo.pause();#}
+{#    myVideo.currentTime=0;#}
+{#    index = index + 1;#}
+{#    if(index==videoList.length)#}
+{#    index = 0;#}
+{#    alert(videoList[index]);#}
+{#    myVideo.src = '{{ media }}learn/'+videoList[index];#}
+{#    window.currentVideoName=videoList[index];#}
+{#    myVideo.play();#}
+{#}#}
+{#function playPause()#}
+{#{#}
+{#    if (myVideo.paused)#}
+{#      myVideo.play();#}
+{#    else#}
+{#      myVideo.pause();#}
+{#}#}
+{#</script>#}
 </body>
 </html>

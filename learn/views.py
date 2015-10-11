@@ -9,15 +9,15 @@ from django.core import serializers
 # Create your views here.
 from os import walk
 def video(request):
-    videos = {}
+    # videos = {}
     videos_file = VideosModel.objects.all()
     videos_file = serializers.serialize('json', videos_file)
     # struct = json.loads(videos_file)
-    # print struct[0]
+    # # print struct[0]
     # videos_file = videos_file[1:-1]
-    # # print videos_file
-    videos_file = json.dumps(videos_file)
-    print type(videos_file)
+    # # # print videos_file
+    # videos_file = json.dumps(videos_file)
+    # print type(videos_file)
     # for video in videos_file:
     #     videos['video_name'] = video.video_name
     #     videos['video_path'] = video.video_path
@@ -41,10 +41,10 @@ def video(request):
     # video_json = json.load(videos_file)
     # print type(video_json)
     # return HttpResponse(videos_file, content_type='application/json')
-    # videos_file = json.dumps({'test': {'num':'12345', 'arr': {'abc':[1,2,3]}}})
+    test = json.dumps({'test': {'num':'12345', 'arr': {'abc':[1,2,3]}}})
     # print test
     # return render(request, "learn/player.html", videos)
-    return render_to_response('learn/player.html', {'video_json': videos_file})
+    return render_to_response('learn/player.html', {'video_json': videos_file, 'test':test})
 
 def video_upload_view(request):
     user = request.user
