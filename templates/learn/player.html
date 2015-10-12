@@ -4,6 +4,13 @@
 <head>
     <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script type="text/javascript" language="javascript">
+         $(document).ready(function() {
+             var video_json = jQuery.parseJSON('{{ video_json }}'.replace(/&quot;/ig, '"'));
+             $("#jname").text(video_json[0].fields.video_name);
+
+         });
+      </script>
 </head>
 <body>
 <p>
@@ -11,72 +18,61 @@ Name: <span id="jname"></span><br />
 Age: <span id="jage"></span><br />
 Address: <span id="jstreet"></span><br />
 Phone: <span id="jphone"></span><br />
-{#</p>#}
-{#<script type="text/javascript">#}
-{#    var video_json = jQuery.parseJSON('{{ video_json }}'.replace(/&quot;/ig, '"'))#}
-{#    var test = jQuery.parseJSON('{{ test }}'.replace(/&quot;/ig, '"'))#}
-{#    document.write(test.test.num)#}
-{#    var Vname = []#}
-{#    for(var i in video_json){#}
-{#        Vname.push(video_json[i].fields.video_name)#}
-{#    }#}
-{#    document.write(Vname)#}
-{#</script>#}
 
 
-{#{{ test }}#}
-
-<table id="dog_table">
- <tbody >
- </tbody>
-</table>
 <div style="text-align:center">
   <button onclick="playPause()">Play/Pause</button>
   <button onclick="nextButton()">Next</button>
   <br>
   <video id="video1" width="420">
-    <source src="{{ media }}English.mp4" type="video/mp4">
+    <source src="/media/learn/English.mp4" type="video/mp4">
     <source  type="video/mp3">
      <source type="video/ogg">
     Your browser does not support HTML5 video.
   </video>
 </div>
-{#<script type="text/javascript">#}
-{#    var video_json = jQuery.parseJSON('{{ video_json }}'.replace(/&quot;/ig, '"'))#}
-{#    var test = jQuery.parseJSON('{{ test }}'.replace(/&quot;/ig, '"'))#}
-{#    document.write(test.test.num)#}
-{#    var Vname = []#}
-{#    for(var i in video_json){#}
-{#        Vname.push(video_json[i].fields.video_name)#}
-{#    }#}
-{#    document.write(Vname)#}
-{##}
-{##}
-{#var myVideo=document.getElementById("video1");#}
-{#var videoList=Vname;#}
-{#var videoList = {{ videos }}#}
-{#videoList#}
-{#var index = videoList.indexOf(window.currentVideoName);#}
-{#index#}
-{#//Next button#}
-{#function nextButton(){#}
-{#    myVideo.pause();#}
-{#    myVideo.currentTime=0;#}
-{#    index = index + 1;#}
-{#    if(index==videoList.length)#}
-{#    index = 0;#}
-{#    alert(videoList[index]);#}
-{#    myVideo.src = '{{ media }}learn/'+videoList[index];#}
-{#    window.currentVideoName=videoList[index];#}
-{#    myVideo.play();#}
-{#}#}
-{#function playPause()#}
-{#{#}
-{#    if (myVideo.paused)#}
-{#      myVideo.play();#}
-{#    else#}
-{#      myVideo.pause();#}
-{#}#}
-{#</script>#}
+<script type="text/javascript">
+    var video_json = jQuery.parseJSON('{{ video_json }}'.replace(/&quot;/ig, '"'));
+    var test = jQuery.parseJSON('{{ test }}'.replace(/&quot;/ig, '"'));
+{#    document.write(video_json);#}
+
+    var Vname = [];
+    var Vpath = [];
+    for(var i in video_json){
+        Vname.push(video_json[i].fields.video_name);
+        Vpath.push(video_json[i].fields.video_path);
+    }
+
+    document.write(Vname);
+    console.log(Vpath)
+{#    document.write('<br>');#}
+{#    document.write(Vpath);#}
+
+
+var myVideo=document.getElementById("video1");
+var videoList=Vpath;
+{#var videoList = {{ Vname }}#}
+var index = videoList.indexOf(window.currentVideoName);
+
+//Next button
+function nextButton(){
+    myVideo.pause();
+    myVideo.currentTime=0;
+    index = index + 1;
+    if(index==videoList.length)
+    index = 0;
+    alert(videoList[index]);
+    myVideo.src = '/media/'+videoList[index];
+    window.currentVideoName=videoList[index];
+    myVideo.play();
+}
+function playPause()
+{
+    if (myVideo.paused)
+      myVideo.play();
+    else
+      myVideo.pause();
+}
+</script>
 </body>
 </html>
