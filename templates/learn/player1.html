@@ -4,7 +4,6 @@
 <head>
     <link rel="stylesheet" href="{% static 'skin/blue.monday/css/prettify-jPlayer.css' %}" type="text/css" />
     <link rel="stylesheet" href="{% static 'skin/pink.flag/css/jplayer.pink.flag.min.css' %}" type="text/css" />
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css" />
     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery.jplayer.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jplayer.playlist.min.js' %}"></script>
@@ -16,7 +15,32 @@
         var myPlayerlist = new jPlayerPlaylist({
             jPlayer: "#jquery_jplayer_N",
             cssSelectorAncestor: "#jp_container_N"
-        },[],{
+        },[
+                {
+			title:"Big Buck Bunny Trailer",
+			artist:"Blender Foundation",
+			free:true,
+			m4v:"http://www.jplayer.org/video/m4v/Big_Buck_Bunny_Trailer.m4v",
+			ogv:"http://www.jplayer.org/video/ogv/Big_Buck_Bunny_Trailer.ogv",
+			webmv: "http://www.jplayer.org/video/webm/Big_Buck_Bunny_Trailer.webm",
+			poster:"http://www.jplayer.org/video/poster/Big_Buck_Bunny_Trailer_480x270.png"
+		},
+		{
+			title:"Finding Nemo Teaser",
+			artist:"Pixar",
+			m4v: "http://www.jplayer.org/video/m4v/Finding_Nemo_Teaser.m4v",
+			ogv: "http://www.jplayer.org/video/ogv/Finding_Nemo_Teaser.ogv",
+			webmv: "http://www.jplayer.org/video/webm/Finding_Nemo_Teaser.webm",
+			poster: "http://www.jplayer.org/video/poster/Finding_Nemo_Teaser_640x352.png"
+		},
+		{
+			title:"Incredibles Teaser",
+			artist:"Pixar",
+			m4v: "http://localhost:8000/media/learn/English.mp4",
+			ogv: "http://www.jplayer.org/video/ogv/Incredibles_Teaser.ogv",
+			webmv: "http://www.jplayer.org/video/webm/Incredibles_Teaser.webm",
+			poster: "http://www.jplayer.org/video/poster/Incredibles_Teaser_640x272.png"
+		}],{
             swfPath: "/staic/js",
             supplied: "mp4, m4v, ogv",
             useStateClassSkin: true,
@@ -24,48 +48,32 @@
             smoothPlayBar: true,
             keyEnabled: true,
             remainingDuration: true,
-            toggleDuration: true,
-            enableRemoveControls: true,
-
+            toggleDuration: true
     });
 
 
+        myPlayerlist.add({
+            title:"Your Face",
+            artist:"The Stark Palace",
+            mp3:"http://www.jplayer.org/audio/mp3/TSP-05-Your_face.mp3",
+            oga:"http://www.jplayer.org/audio/ogg/TSP-05-Your_face.ogg",
+            poster: "http://www.jplayer.org/audio/poster/The_Stark_Palace_640x360.png"
 
+        });
         var video_list = ""
-        $.getJSON('videodata/', function(data){
+        $.getJSON('../videodata/', function(data){
             $.each(data, function(index, value){
-{#                console.log(value.fields.video_path)#}
-{#                console.log(value.fields)#}
-{#                myPlayerlist.add({#}
-{#                    title: value.fields.video_name,#}
-{#                    artist: value.fields.video_owner,#}
-{#                    m4v: '../media/' + value.fields.video_path#}
-{#                });#}
-                video_list = "<li><span class='play-list' video_path='" + value.fields.video_path +
-                "'" + "" + "video_title='" + value.fields.video_name +"'"+"" + "video_owner='" + value.fields
-                                .video_owner + "'" + "" + "video_index=" + index + ">" + value.fields.video_name+
-                        "</span></li>"
+                myPlayerlist.add({
+                    title: value.fields.video_name,
+                    artist: value.fields.video_owner,
+                    m4v: '../media/' + value.fields.video_path
+                });
+                video_list = "<a href=../../media/" + value.fields.video_path + "><li>" + value.fields.video_name +
+                        "</li></a>"
                 $('#video_name_list').append(video_list);
-
-
-            });
-
+            })
         });
-        $('#video_name_list').on("dblclick", '.play-list',  function(){
-            myPlayerlist.add({
-                title: $(this).attr("video_title"),
-                artist: $(this).attr("video_owner"),
-                m4v: '../media/' + $(this).attr('video_path'),
-                free:true,
-            });
-        });
-        $(".jp-playlist>ul").on("dblclick", "li", function () {
-{#            alert($(this).index());#}
-            myPlayerlist.remove($(this).index()); // Removes the 3rd item
-
-        });
-        $("#jplayer_inspector_N").jPlayerInspector({jPlayer:$("#jquery_jplayer_N")});
-
+        $("#jplayer_inspector_1").jPlayerInspector({jPlayer:$("#jquery_jplayer_1")});
         $('#file_upload').live(submit, function(event){
             event.preventDefault()
             $.ajax({
@@ -76,35 +84,29 @@
                     alert(arg);
                 }
 
-            });
-        });
+            })
+        })
     });
+
   </script>
 
 </head>
-<body style="margin-top: 20px">
-<div class="row">
-        <div class="col-md-5">
+<body>
+<div id="video_list">
+    <ul id="video_name_list">
 
-            <div id="video_list" style="margin-left:10px">
-                <h5>you can add these meidas files into playlist by double click on them</h5>
-                <ul id="video_name_list">
-
-            </ul>
+    </ul>
 </div>
-<label
 <form id="file_upload" name="file_upload" enctype="multipart/form-data" method="POST" action="/learn/videoupload/">
              {% csrf_token %}
              {{ sccuess }}
-
-            <input type="text" name="video_name" placeholder="Video Name" value=
-                     "{{ video_name }}"/><button id="sumbit" type="submit">upload</button><br>
+             <input type="text" name="video_name" placeholder="Video Name" value=
+                     "{{ video_name }}"/><br>
              <input type="file" name="video_path" />
-
+             <button id="sumbit" type="submit">upload</button>
 </form>
-</div>
-        <div class="col-md-7">
-<div id="jp_container_N" class="jp-video jp-video-270p" role="application" aria-label="media player">
+<div id="jp_container_N" class="jp-video jp-video-270p" role="application" aria-label="media player" style="margin:
+auto">
 	<div class="jp-type-playlist">
 		<div id="jquery_jplayer_N" class="jp-jplayer"></div>
 		<div class="jp-gui">
@@ -147,17 +149,15 @@
 		<div class="jp-playlist">
 			<ul>
 				<!-- The method Playlist.displayPlaylist() uses this unordered list -->
-{#				<li></li>#}
+				<li></li>
 			</ul>
 		</div>
+    <div class="jp-no-solution">
+      <span>Update Required</span>
+      To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
     </div>
-{#    <div class="jp-no-solution">#}
-{#      <span>Update Required</span>#}
-{#      To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.#}
-{#    </div>#}
   </div>
 </div>
-    </div>
 
 </body>
 </html>
