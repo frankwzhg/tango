@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     #'rango.templatertags.rango_extras',
     'rango',
     'learn',
+    'autocoffe',
 
 )
 

@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^accounts/register/$', MyregistrationView.as_view(), name='registration_register'),
     url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^learn/', include('learn.urls')),
+    url(r'coffeebreak/', include('autocoffe.urls')),
 )
 
 if settings.DEBUG:

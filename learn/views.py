@@ -1,14 +1,8 @@
-from django.shortcuts import render, render_to_response
-from tango.settings import *
 from learn.forms import *
 from django.http import HttpResponse, HttpResponseRedirect
-from django.template import RequestContext
-from django.views.generic import TemplateView
-import json
-from django.core.serializers.json import DjangoJSONEncoder
 from django.core import serializers
 # Create your views here.
-from os import walk
+
 
 def video(request):
     videos_file = VideosModel.objects.all()
@@ -19,9 +13,7 @@ def video_upload_view(request):
     arg = {}
     user = request.user
     if request.method == 'POST':
-        print request.POST.get('video_name')
         form = Video_Upload_Form(request.POST)
-        print form
         if form.is_valid():
             form_count = form.save(commit=False)
             form_count.video_owner = user

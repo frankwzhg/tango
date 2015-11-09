@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+    <head>
+        <title>enjoy life</title>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" type="text/css">
+        <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('input').mouseleave(function(){
+                    $('input').attr('disabled', true);
+                    setTimeout(function(){
+                        $('input').attr("disabled", false);
+                    }, 5000);
+                })
+            })
+        </script>
+    </head>
+    <body style="background-image: url({% static 'autocoffee/relaxtime.jpg' %});background-repeat: no-repeat;
+            background-size: 100%;
+            ">
+        <div style="width:400px; margin: 0 auto;margin-top: 10%"><h1 style="color:red">make your choice</h1></div>
+        <div style="width:800px; margin: 0 auto; margin-top: 5%">
+        <form name="order" id="order" action="" method="POST">
+            {% csrf_token %}
+            <input type="submit" class="btn-lg" name="tea" id="tea" value="Make Tea" /><input type="submit" name="cof" class="btn-lg" id="cof" value="Make Coffee" style="float:right" /><br><br>
+            <input type="submit" class="btn-lg" name="lightO" id="lightO" value="Open Light" /><input type="submit" name="lightC" class="btn-lg" id="lightC" value="Close Light" style="float:right" />
+        </form>
+        </div>
+
+    </body>
+</html>

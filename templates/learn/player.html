@@ -31,27 +31,20 @@
 
 
 
-        var video_list = ""
         $.getJSON('videodata/', function(data){
             $.each(data, function(index, value){
-{#                console.log(value.fields.video_path)#}
-{#                console.log(value.fields)#}
-{#                myPlayerlist.add({#}
-{#                    title: value.fields.video_name,#}
-{#                    artist: value.fields.video_owner,#}
-{#                    m4v: '../media/' + value.fields.video_path#}
-{#                });#}
-                video_list = "<li><span class='play-list' video_path='" + value.fields.video_path +
-                "'" + "" + "video_title='" + value.fields.video_name +"'"+"" + "video_owner='" + value.fields
-                                .video_owner + "'" + "" + "video_index=" + index + ">" + value.fields.video_name+
-                        "</span></li>"
-                $('#video_name_list').append(video_list);
+{#                video_name = "<li><span class='play-list' video_path='" + value.fields.video_path + "'" + "" + "video_title='" + value.fields.video_name +"'"+"" + "video_owner='" + value.fields.video_owner + "'" + "" + "video_index=" + index + ">" + value.fields.video_name+"</span>"+ value.fields.video_owner +"</li>"#}
+                video_name = "<tr><td>" + value.fields.video_name+ "</td><td>"+ value.fields.video_owner +"</td><td>" + value.fields.upload_date
+                        +"</td><td><span class='play-list' video_path='" + value.fields.video_path + "'" + "" +
+                        "video_title='" + value.fields.video_name +"'"+"" + "video_owner='" + value.fields.video_owner + "'" + "" + "video_index=" + index + "><button class='add_playlist' type='submit'>add playlist</button></span></td></tr>"
 
+
+                $('#video_name_list').append(video_name);
 
             });
 
         });
-        $('#video_name_list').on("dblclick", '.play-list',  function(){
+        $('#video_name_list').on("click", '.play-list',  function(){
             myPlayerlist.add({
                 title: $(this).attr("video_title"),
                 artist: $(this).attr("video_owner"),
@@ -85,14 +78,16 @@
 <body style="margin-top: 20px">
 <div class="row">
         <div class="col-md-5">
-
+            <div></div>
             <div id="video_list" style="margin-left:10px">
                 <h5>you can add these meidas files into playlist by double click on them</h5>
-                <ul id="video_name_list">
-
-            </ul>
+                <table id="video_name_list" width="80%">
+                    <th>video_name</th>
+                    <th>video_owner</th>
+                    <th>upload_date</th>
+                    <th>add to playlist</th>
+                </table>
 </div>
-<label
 <form id="file_upload" name="file_upload" enctype="multipart/form-data" method="POST" action="/learn/videoupload/">
              {% csrf_token %}
              {{ sccuess }}
