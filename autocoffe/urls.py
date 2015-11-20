@@ -9,4 +9,6 @@ from django.views.generic import TemplateView
 urlpatterns = patterns('',
             url(r'^$', views.relaxtime, name='relaxtime'),
             url(r'^test/$', TemplateView.as_view(template_name='autocoffee/test.html'), name='test'),
+            url(r'auth_ip/$', views.auth_ipaddress, name='auth_ip'),
+            url(r'ip_add/$', views.add_ipaddress, name='ip_add'),
             )

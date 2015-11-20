@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models, migrations
-import datetime
+from django.db import migrations, models
+import django.utils.timezone
 from django.conf import settings
 
 
@@ -22,9 +22,6 @@ class Migration(migrations.Migration):
                 ('likes', models.IntegerField(default=0)),
                 ('slug', models.SlugField(unique=True)),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='Page',
@@ -35,9 +32,6 @@ class Migration(migrations.Migration):
                 ('views', models.IntegerField(default=0)),
                 ('Category', models.ForeignKey(to='rango.Category')),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='UserProfile',
@@ -47,12 +41,11 @@ class Migration(migrations.Migration):
                 ('picture', models.ImageField(upload_to=b'profile_images', blank=True)),
                 ('birthday', models.DateField(blank=True)),
                 ('activation_key', models.CharField(max_length=40, blank=True)),
-                ('key_expires', models.DateTimeField(default=datetime.date(2015, 10, 9))),
+                ('key_expires', models.DateTimeField(default=django.utils.timezone.now)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'verbose_name_plural': 'User profile',
             },
-            bases=(models.Model,),
         ),
     ]

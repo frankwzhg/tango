@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>manage ip address</title>
+    <link rel="stylesheet" href="{% static 'skin/blue.monday/css/prettify-jPlayer.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'skin/pink.flag/css/jplayer.pink.flag.min.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css" />
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.jplayer.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jplayer.playlist.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.jplayer.inspector.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/themeswitcher.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $.getJSON('auth_ip/', function(data){
+                $.each(data, function(index, value){
+                ip_list = "<tr><td>" + value.fields.name+ "</td><td>"+ value.fields.ip_address +"</td><td>"
+                $('#auth_iplist').append(ip_list);
+
+            });
+            });
+        })
+    </script>
+    </head>
+    <body>
+{#        <div id="auth_iplist" style="margin-left:10px">#}
+{#                <h5>authorized ip list</h5>#}
+{#                <table id="auth_iplist" width="80%">#}
+{#                    <th>name</th>#}
+{#                    <th>IP_address</th>#}
+{#                </table>#}
+{#        </div>#}
+        <div id="ip_add">
+            <form name = "ip_add" id="ip_add" method="POST" action="">
+                {% csrf_token %}
+                <input type="text" name="uname" placeholder="your name" /><br>
+                <input type="text" name="ipaddress" placeholder="please input IP address" /><br>
+                <input type="submit" id="ip_submit" value="Add" />
+            </form>
+        </div>
+    </body>
+</html>

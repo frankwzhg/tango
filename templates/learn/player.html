@@ -33,7 +33,6 @@
 
         $.getJSON('videodata/', function(data){
             $.each(data, function(index, value){
-{#                video_name = "<li><span class='play-list' video_path='" + value.fields.video_path + "'" + "" + "video_title='" + value.fields.video_name +"'"+"" + "video_owner='" + value.fields.video_owner + "'" + "" + "video_index=" + index + ">" + value.fields.video_name+"</span>"+ value.fields.video_owner +"</li>"#}
                 video_name = "<tr><td>" + value.fields.video_name+ "</td><td>"+ value.fields.video_owner +"</td><td>" + value.fields.upload_date
                         +"</td><td><span class='play-list' video_path='" + value.fields.video_path + "'" + "" +
                         "video_title='" + value.fields.video_name +"'"+"" + "video_owner='" + value.fields.video_owner + "'" + "" + "video_index=" + index + "><button class='add_playlist' type='submit'>add playlist</button></span></td></tr>"

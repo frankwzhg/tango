@@ -7,16 +7,16 @@
         <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
 
-        <script type="text/javascript">
-            $(document).ready(function(){
-                $('input').mouseleave(function(){
-                    $('input').attr('disabled', true);
-                    setTimeout(function(){
-                        $('input').attr("disabled", false);
-                    }, 5000);
-                })
-            })
-        </script>
+{#        <script type="text/javascript">#}
+{#            $(document).ready(function(){#}
+{#                $('input').mouseleave(function(){#}
+{#                    $('input').attr('disabled', true);#}
+{#                    setTimeout(function(){#}
+{#                        $('input').attr("disabled", false);#}
+{#                    }, 5000);#}
+{#                })#}
+{#            })#}
+{#        </script>#}
     </head>
     <body style="background-image: url({% static 'autocoffee/relaxtime.jpg' %});background-repeat: no-repeat;
             background-size: 100%;
@@ -25,6 +25,10 @@
         <div style="width:800px; margin: 0 auto; margin-top: 5%">
         <form name="order" id="order" action="" method="POST">
             {% csrf_token %}
+            <lable>Please choice your cup size:</lable><br>
+            <input type="radio" name="cupsize" value="big" style="color:blue">Big<br>
+            <input type="radio" name="cupsize" value="middle">Middle<br>
+            <input type="radio" name="cupsize" value="small">Small<br>
             <input type="submit" class="btn-lg" name="tea" id="tea" value="Make Tea" /><input type="submit" name="cof" class="btn-lg" id="cof" value="Make Coffee" style="float:right" /><br><br>
             <input type="submit" class="btn-lg" name="lightO" id="lightO" value="Open Light" /><input type="submit" name="lightC" class="btn-lg" id="lightC" value="Close Light" style="float:right" />
         </form>

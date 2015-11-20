@@ -1,7 +1,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
-import datetime
+from django.utils import timezone
 # Create your models here.
 
 class Category(models.Model):
@@ -37,7 +37,7 @@ class UserProfile(models.Model):
     # picture = models.ImageField(upload_to='profile_images', blank=True)
     birthday = models.DateField(blank=True)
     activation_key = models.CharField(max_length=40, blank=True)
-    key_expires = models.DateTimeField(default=datetime.date.today())
+    key_expires = models.DateTimeField(default=timezone.now)
 
 
     # Override the __unicode__() method to return out something meanningful
