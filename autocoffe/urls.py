@@ -11,4 +11,5 @@ urlpatterns = patterns('',
             url(r'^test/$', TemplateView.as_view(template_name='autocoffee/test.html'), name='test'),
             url(r'auth_ip/$', views.auth_ipaddress, name='auth_ip'),
             url(r'ip_add/$', views.add_ipaddress, name='ip_add'),
+            url(r'ip_delete/$', views.delete, name='ip_delete'),
             )

@@ -15,29 +15,45 @@
         $(document).ready(function(){
             $.getJSON('auth_ip/', function(data){
                 $.each(data, function(index, value){
-                ip_list = "<tr><td>" + value.fields.name+ "</td><td>"+ value.fields.ip_address +"</td><td>"
+                ip_list = "<tr><td>" + index + "</td><td>"+ value.fields.name +"</td><td>" + value.fields.ip_address  +
+                        "</td><td><button class='detcheckbox' name='delitem' value=" +index+
+                        ">Delete</button></td></tr>"
                 $('#auth_iplist').append(ip_list);
 
             });
             });
+            $("#auth_iplist").on('click','button', function(){
+                id = $(this).attr('value');
+                $.ajax({
+                    type: "POST",
+                    url: "coffeebreak/deleteip/",
+                    data: {id:id},
+                    success: function(response){
+                        alert(response.sucess);
+                    }
+                })
+            })
         })
     </script>
     </head>
     <body>
-{#        <div id="auth_iplist" style="margin-left:10px">#}
-{#                <h5>authorized ip list</h5>#}
-{#                <table id="auth_iplist" width="80%">#}
-{#                    <th>name</th>#}
-{#                    <th>IP_address</th>#}
-{#                </table>#}
-{#        </div>#}
-        <div id="ip_add">
-            <form name = "ip_add" id="ip_add" method="POST" action="">
+                <h5>delete ip</h5>
+                <div id="del_list"></div>
+                <h5>authorized ip list</h5>
+                <table id="auth_iplist" width="80%">
+                    <th>Index</th>
+                    <th>Name</th>
+                    <th>IP_address</th>
+                    <th>Delete</th>
+                </table><br>
+            <form name='add_ip' method="POST" action="">
                 {% csrf_token %}
-                <input type="text" name="uname" placeholder="your name" /><br>
-                <input type="text" name="ipaddress" placeholder="please input IP address" /><br>
-                <input type="submit" id="ip_submit" value="Add" />
+{#                {{ form.as_table }}#}
+                <label>please input your name</label><br>
+                <input type="text" name="name" id="name" placeholder="your name" /><br><br>
+               <label>please input your IP address</label><br>
+                <input type="text" name="ip_address" id="ip_address" placeholder="please input IP address" /><br><br>
+                <input type="submit" id="ip_submit" name="ip_submit" value="Add" />
             </form>
-        </div>
     </body>
 </html>
