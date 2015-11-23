@@ -5,6 +5,7 @@ from autocoffe.models import *
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseRedirect
 from autocoffe.forms import *
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 import serial
@@ -36,23 +37,21 @@ def add_ipaddress(request):
     if (request.method == "POST") and ("ip_submit" in request.POST):
         form = IP_Add_Form(request.POST)
         if form.is_valid():
-            print "test"
             form.save()
             # form_content = form.save(commit=False)
             # form_content.name = request.POST.get('uname')
             # print request.POST.get('uname')
             # form_content.ip_address = request.POST.get('ipaddress')
             # form_content.save()
-            return HttpResponse("you are sucess")
+            return HttpResponseRedirect("/coffeebreak/ip_add/")
         else:
             return HttpResponse("you are failed")
     else:
         form = IP_Add_Form()
         return render_to_response('autocoffee/ip_address.html', {'form':form}, RequestContext(request))
 
-
+@csrf_exempt
 def delete(request):
-    candidate = IPaddressModel.objects.get(index=int(request.REQUEST['id']))
+    candidate = IPaddressModel.objects.get(ip_address=request.REQUEST['ip_address'])
     candidate.delete()
-    payload = {'success': True}
-    return HttpResponse("you are success")
+    return HttpResponseRedirect("/coffeebreak/ip_add/")

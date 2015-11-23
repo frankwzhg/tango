@@ -3440,6 +3440,13 @@
       <index name="auth_user_user_permissions_8373b171" unique="false" columns="permission_id"/>
       <index name="auth_user_user_permissions_e8701ad4" unique="false" columns="user_id"/>
     </table>
+    <table name="autocoffe_ipaddressmodel" schema="" catalog="tango" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="128" scale="0" nullable="false" jdbcType="12"/>
+      <column name="ip_address" sqlType="VARCHAR" precision="128" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="ip_address" unique="true" columns="ip_address"/>
+    </table>
     <table name="django_admin_log" schema="" catalog="tango" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="action_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
@@ -3512,7 +3519,7 @@
       <column name="Category_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="rango_page_Category_id_21bd5f0b_fk_rango_category_id" columns="Category_id" ref-table="rango_category" ref-schema="" ref-catalog="tango" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
-      <index name="rango_page_e9c8a574" unique="false" columns="Category_id"/>
+      <index name="rango_page_Category_id_21bd5f0b_fk_rango_category_id" unique="false" columns="Category_id"/>
     </table>
     <table name="rango_userprofile" schema="" catalog="tango" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>

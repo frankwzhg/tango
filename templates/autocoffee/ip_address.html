@@ -16,19 +16,19 @@
             $.getJSON('auth_ip/', function(data){
                 $.each(data, function(index, value){
                 ip_list = "<tr><td>" + index + "</td><td>"+ value.fields.name +"</td><td>" + value.fields.ip_address  +
-                        "</td><td><button class='detcheckbox' name='delitem' value=" +index+
-                        ">Delete</button></td></tr>"
+                        "</td><td><button class='detcheckbox' name=" + value.fields
+                                .ip_address + ">Delete</button></td></tr>"
                 $('#auth_iplist').append(ip_list);
 
             });
             });
             $("#auth_iplist").on('click','button', function(){
-                id = $(this).attr('value');
+                ip_address = $(this).attr('name');
                 $.ajax({
                     type: "POST",
-                    url: "coffeebreak/deleteip/",
-                    data: {id:id},
-                    success: function(response){
+                    url: "/coffeebreak/ip_delete/",
+                    data: {ip_address:ip_address},
+                    success: function(response) {
                         alert(response.sucess);
                     }
                 })
