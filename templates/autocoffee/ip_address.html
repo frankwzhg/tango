@@ -28,17 +28,21 @@
                     type: "POST",
                     url: "/coffeebreak/ip_delete/",
                     data: {ip_address:ip_address},
-                    success: function(response) {
-                        alert(response.sucess);
+                    success: function(data) {
+{#                        alert(response.sucess);#}
+                        $('#auth_iplist').html(data);
                     }
                 })
             })
+
         })
     </script>
     </head>
     <body>
-                <h5>delete ip</h5>
-                <div id="del_list"></div>
+                <h5>status list</h5>
+                <div id="status_list">
+
+                </div>
                 <h5>authorized ip list</h5>
                 <table id="auth_iplist" width="80%">
                     <th>Index</th>

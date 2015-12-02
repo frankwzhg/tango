@@ -7,7 +7,7 @@
         <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
 
-{#        <script type="text/javascript">#}
+        <script type="text/javascript">
 {#            $(document).ready(function(){#}
 {#                $('input').mouseleave(function(){#}
 {#                    $('input').attr('disabled', true);#}
@@ -15,12 +15,30 @@
 {#                        $('input').attr("disabled", false);#}
 {#                    }, 5000);#}
 {#                })#}
+
 {#            })#}
-{#        </script>#}
+            setInterval(function(){
+                $.ajax({
+                    type: "GET",
+                    url: "/coffeebreak/send_dis/",
+                    data: {data:"abc"},
+                    success: function(data){
+                        $('#status_list').html(data)
+                    }
+                })
+            }, 1000)
+        </script>
     </head>
-    <body style="background-image: url({% static 'autocoffee/relaxtime.jpg' %});background-repeat: no-repeat;
-            background-size: 100%;
-            ">
+{#    <body style="background-image: url({% static 'autocoffee/relaxtime.jpg' %});background-repeat: no-repeat;#}
+{#            background-size: 100%;#}
+{#            ">#}
+    <body>
+    <div style="width:400px; margin: 0 auto;margin-top: 10%">
+        <h5 style="color:red">status list</h5>
+            <div id="status_list">
+            </div>
+    </div>
+
         <div style="width:400px; margin: 0 auto;margin-top: 10%"><h1 style="color:red">make your choice</h1></div>
         <div style="width:800px; margin: 0 auto; margin-top: 5%">
         <form name="order" id="order" action="" method="POST">

@@ -6,24 +6,25 @@ from django.core import serializers
 from django.http import HttpResponse, HttpResponseRedirect
 from autocoffe.forms import *
 from django.views.decorators.csrf import csrf_exempt
+import time
 
 # Create your views here.
 import serial
 import struct
-# ser = serial.Serial('/dev/ttyACM1', 9600)
+ser = serial.Serial('/dev/ttyACM1', 9600)
 def relaxtime(request):
-    # print request.POST.get('tea')
-    # if "tea" in request.POST:
-    #     print "test"
-    #     ser.write(struct.pack('>2B', 0, 100))
-    # elif "cof" in request.POST:
-    #     ser.write(struct.pack('>2B', 0, 50))
-    # elif 'lightO' in request.POST:
-    #     print "test1"
-    #     ser.write(struct.pack('>2B', 1, 0))
-    # elif 'lightC' in request.POST:
-    #     print "test2"
-    #     ser.write(struct.pack('>2B', 2, 0))
+    print request.POST.get('tea')
+    if "tea" in request.POST:
+        print "test"
+        ser.write(struct.pack('>2B', 0, 100))
+    elif "cof" in request.POST:
+        ser.write(struct.pack('>2B', 0, 50))
+    elif 'lightO' in request.POST:
+        print "test1"
+        ser.write(struct.pack('>2B', 3, 0))
+    elif 'lightC' in request.POST:
+        print "test2"
+        ser.write(struct.pack('>2B', 4, 0))
     return render_to_response('autocoffee/index.html', {}, RequestContext(request))
 
 
@@ -55,3 +56,16 @@ def delete(request):
     candidate = IPaddressModel.objects.get(ip_address=request.REQUEST['ip_address'])
     candidate.delete()
     return HttpResponseRedirect("/coffeebreak/ip_add/")
+
+def get_serial_value(request):
+
+    # ser = serial.Serial('/dev/ttyACM1', 9600, timeout=0)
+    data = []
+    time0 = time.time()
+
+    while (time.time() -time0 <= 90):
+        data.append(ser.readline()[0:1])
+        # time.sleep(18)
+    print data
+    return HttpResponse(data)
+

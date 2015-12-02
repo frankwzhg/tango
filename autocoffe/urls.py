@@ -12,4 +12,5 @@ urlpatterns = patterns('',
             url(r'auth_ip/$', views.auth_ipaddress, name='auth_ip'),
             url(r'ip_add/$', views.add_ipaddress, name='ip_add'),
             url(r'ip_delete/$', views.delete, name='ip_delete'),
+            url(r'send_dis/$', views.get_serial_value, name='send_dis'),
             )
