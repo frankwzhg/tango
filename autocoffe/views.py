@@ -11,7 +11,7 @@ import time
 # Create your views here.
 import serial
 import struct
-ser = serial.Serial('/dev/ttyACM1', 9600)
+ser = serial.Serial('/dev/ttyACM2', 9600)
 def relaxtime(request):
     print request.POST.get('tea')
     if "tea" in request.POST:
@@ -57,15 +57,15 @@ def delete(request):
     candidate.delete()
     return HttpResponseRedirect("/coffeebreak/ip_add/")
 
-def get_serial_value(request):
-
-    # ser = serial.Serial('/dev/ttyACM1', 9600, timeout=0)
-    data = []
-    time0 = time.time()
-
-    while (time.time() -time0 <= 90):
-        data.append(ser.readline()[0:1])
-        # time.sleep(18)
-    print data
-    return HttpResponse(data)
+# def get_serial_value(request):
+#
+#     # ser = serial.Serial('/dev/ttyACM1', 9600, timeout=0)
+#     data = []
+#     time0 = time.time()
+#
+#     while (time.time() -time0 <= 90):
+#         data.append(ser.readline()[0:1])
+#         # time.sleep(18)
+#     print data
+#     return HttpResponse(data)
 
